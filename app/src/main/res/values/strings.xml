@@ -1,0 +1,129 @@
+<resources>
+    <string name="app_name">Practice</string>
+    <string name="version">0.0.0</string>
+    <string name="title_activity_login">登录</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="button_login_in">登录</string>
+    <string name="title_activity_main_frame">MainFrameActivity</string>
+    <string name="title_home">主页</string>
+    <string name="title_my_info">我的</string>
+    <string name="title_test">测试</string>
+    <string name="title_dor">宿舍</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_settings">设置</string>
+
+    <string name="navigation_bottom_height">56dp</string>
+
+    <!--fragment_my_info-->
+    <string name="my_info_detail">详细信息</string>
+    <string name="my_info_payment">宿舍缴费</string>
+    <string name="my_info_setting">应用设置</string>
+    <string name="my_info_about">关于作者</string>
+    <string name="my_info_default_name">unknown</string>
+    <string name="my_info_default_desc">unknown|unknown|unknown</string>
+
+    <!--fragement_dor -->
+    <string name="dor_building">宿舍楼</string>
+    <string name="dor_my_dor">我的宿舍</string>
+
+    <!--fragment_dor_building-->
+    <string name="dor_bui_find_people">找人</string>
+    <string name="dor_bui_post">都在说啥?</string>
+    <string name="post_default_name">王小E</string>
+    <string name="post_default_date">2019-1-1 10:10:10</string>
+    <string name="post_default_content">两开花两开花两开花两开花两开花两开花两开花两开花两开花两开花两开花两开花两开花两开花两开花两开花两开花两开花两开花两开花</string>
+    <string name="default_dor">308</string>
+
+    <!--activitiy_add_post-->
+    <string name="add_post_hint">说两句...</string>
+    <!--fragment_dor_my_dor-->
+    <string name="dor_my_mates">我的舍友</string>
+    <string name="dor_my_pay">水电费查询</string>
+    <string name="dor_my_pay_desc">上次查询时间：{0}\n水费:{1} 电费:{2}</string>
+    <string name="dor_my_event">事件</string>
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_social_recommendations">Enable social recommendations</string>
+    <string name="pref_description_social_recommendations">Recommendations for people to contact
+        based on your message history
+    </string>
+
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">John Smith</string>
+
+    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+    <string-array name="pref_example_list_titles">
+        <item>Always</item>
+        <item>When possible</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Data &amp; sync</string>
+
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+
+    <string-array name="list_preference_entries">
+        <item>Entry 1</item>
+        <item>Entry 2</item>
+        <item>Entry 3</item>
+    </string-array>
+
+    <string-array name="list_preference_entry_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="multi_select_list_preference_default_value" />
+
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Notifications</string>
+
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="pref_title_vibrate">Vibrate</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

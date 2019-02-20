@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DorBuildingFragment">
+
+    <!-- TODO: 找人的界面、读取帖子列表的接口 -->
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBg"
+        android:orientation="vertical">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBg"
+            app:elevation="0dp">
+
+            <!--找人-->
+            <LinearLayout
+                android:id="@+id/dor_bui_section_find"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/colorWhite"
+                app:layout_scrollFlags="scroll">
+
+                <LinearLayout
+                    android:id="@+id/dor_bui_layout_find_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
+                    <!--找人 的标题-->
+                    <TextView
+                        android:id="@+id/dor_bui_text_find"
+                        style="@style/StCommonTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dor_bui_find_people" />
+                    <!--宿舍号TAGs-->
+                    <LinearLayout
+                        android:id="@+id/dor_bui_layout_tags"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dp"
+                            android:background="@drawable/text_tag"
+                            android:text="@string/default_dor"
+                            android:textSize="16sp"
+                            android:textColor="@color/qmui_config_color_gray_5" />
+
+                        <TextView
+                            android:id="@+id/textView9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dp"
+                            android:background="@drawable/text_tag"
+                            android:text="@string/default_dor"
+                            android:textSize="16sp"
+                            android:textColor="@color/qmui_config_color_gray_5" />
+
+                        <TextView
+                            android:id="@+id/textView10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dp"
+                            android:background="@drawable/text_tag"
+                            android:text="@string/default_dor"
+                            android:textSize="16sp"
+                            android:textColor="@color/qmui_config_color_gray_5" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!--发帖 标题-->
+
+            <LinearLayout
+                android:id="@+id/dor_bui_section_post_title_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/colorWhite">
+
+                <LinearLayout
+                    android:id="@+id/dor_bui_layout_post_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/dor_bui_text_posts"
+                        style="@style/StCommonTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/dor_bui_post" />
+
+                    <ImageView
+                        android:id="@+id/dor_bui_image_add"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_add_circle_outline_black_24dp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <!--发帖的帖子主体-->
+        <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+
+        <LinearLayout
+                android:id="@+id/dor_bui_section_post"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginBottom="10dp"
+                android:background="@color/colorBg">
+
+            <!--所有的帖子-->
+            <LinearLayout
+                android:id="@+id/dor_bui_layout_allposts"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+            </LinearLayout>
+
+        </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </android.support.design.widget.CoordinatorLayout>
+</FrameLayout>
