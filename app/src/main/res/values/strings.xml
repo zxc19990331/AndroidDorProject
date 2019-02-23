@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Practice</string>
+    <string name="app_name">宿料</string>
     <string name="version">0.0.0</string>
     <string name="title_activity_login">登录</string>
 
