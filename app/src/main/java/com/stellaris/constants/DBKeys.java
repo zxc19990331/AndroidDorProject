@@ -25,6 +25,8 @@ public interface DBKeys {
     String POST_TYPE = "type";
     String POST_USR_NAME = "user_name";
 
+    String POST_TYPE_STU = "stu";
+
     String ROOM_ID = "id";
     String ROOM_ID_SHORT = "short_id";
     String ROOM_BUI_ID = "building_id";
@@ -35,4 +37,5 @@ public interface DBKeys {
     String ROOM_WATER = "water_rate";
     String ROOM_LAST_REQ_DATE = "lase_requry_date";
     String ROOM_EVENTS = "events";
+
 }

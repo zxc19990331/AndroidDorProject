@@ -15,8 +15,8 @@ public class test {
     private static String passworld = "123456";
 
     public static void main(String[] args) throws Exception {
-        HashMap<String, String> map = DBHandle.getAllInfoByName("admin");
-        System.out.print(map);
+
+        System.out.print(DBHandle.getPostingBySchoolAndBui("01","05",true));
     }
 
     public static Connection getconnection()
