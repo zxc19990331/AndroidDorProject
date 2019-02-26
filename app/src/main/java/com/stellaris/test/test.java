@@ -3,6 +3,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.HashMap;
 
+import com.stellaris.functions.TimeUtil;
 import com.stellaris.functions.DBUtils;
 import com.stellaris.functions.DBHandle;
 
@@ -16,7 +17,7 @@ public class test {
 
     public static void main(String[] args) throws Exception {
 
-        System.out.print(DBHandle.getPostingBySchoolAndBui("01","05",true));
+        System.out.print(TimeUtil.formatDisplayTime("2019-2-26 14:30:20","yyyy-MM-dd HH:mm:ss"));
     }
 
     public static Connection getconnection()

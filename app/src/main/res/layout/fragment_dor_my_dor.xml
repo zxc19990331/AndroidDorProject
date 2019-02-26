@@ -19,13 +19,6 @@
             android:id="@+id/dor_my_dor_layout_mates"
             style="@style/StTitleBG"
             android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10dp"
-                android:orientation="vertical">
-
                 <TextView
                     android:id="@+id/dor_my_dor_text_mates"
                     style="@style/StCommonTitle"
@@ -35,8 +28,9 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"/>
+
 
         </LinearLayout>
 
@@ -45,13 +39,6 @@
             style="@style/StTitleBG"
             android:layout_width="match_parent"
             android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10dp"
-                android:orientation="vertical">
-
                 <TextView
                     android:id="@+id/dor_my_dor_text_pay"
                     style="@style/StCommonTitle"
@@ -65,8 +52,9 @@
                     android:layout_height="wrap_content"
                     android:lineSpacingMultiplier="1.2"
                     android:text="@string/dor_my_pay_desc"
-                    android:textColor="@color/qmui_config_color_gray_1" />
-            </LinearLayout>
+                    android:textColor="@color/qmui_config_color_gray_1"
+                    android:layout_marginBottom="10dp"/>
+
 
         </LinearLayout>
 
@@ -76,12 +64,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
                 <TextView
                     style="@style/StCommonTitle"
                     android:id="@+id/dor_my_dor_text_event"
@@ -89,7 +71,6 @@
                     android:layout_height="wrap_content"
                     android:text="@string/dor_my_event" />
 
-            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>

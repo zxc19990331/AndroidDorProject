@@ -27,6 +27,12 @@
 
     <string name="navigation_bottom_height">56dp</string>
 
+    <!--fragment_home-->
+    <string name="home_cha_le_ma">查房了吗</string>
+    <string name="home_chalema_default">正在获取查房数据...</string>
+    <string name="home_meicha">没有哦</string>
+    <string name="home_zhengzaicha">正在查房!</string>
+
     <!--fragment_my_info-->
     <string name="my_info_detail">详细信息</string>
     <string name="my_info_payment">宿舍缴费</string>

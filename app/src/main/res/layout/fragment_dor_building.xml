@@ -15,7 +15,7 @@
         android:layout_height="match_parent">
         <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/colorBg"
             android:orientation="vertical">
 
@@ -100,19 +100,12 @@
                     android:id="@+id/dor_bui_section_post_title_bg"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
                     android:paddingTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@color/colorWhite">
-
-                    <LinearLayout
-                        android:id="@+id/dor_bui_layout_post_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
                         <TextView
                             android:id="@+id/dor_bui_text_posts"
                             style="@style/StCommonTitle"
@@ -129,7 +122,6 @@
                             android:layout_gravity="center"
                             app:srcCompat="@drawable/ic_add_circle_outline_black_24dp" />
 
-                    </LinearLayout>
                 </LinearLayout>
 
             </android.support.design.widget.AppBarLayout>
@@ -140,23 +132,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:fillViewport="true" >
-
-            <LinearLayout
-                    android:id="@+id/dor_bui_section_post"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="10dp"
-                    android:background="@color/colorBg">
-
+            android:background="@color/colorBg"
+            android:fillViewport="true">
                 <!--所有的帖子-->
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/dor_bui_posts"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="wrap_content" />
 
-            </LinearLayout>
             </android.support.v4.widget.NestedScrollView>
         </android.support.design.widget.CoordinatorLayout>
     </com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout>

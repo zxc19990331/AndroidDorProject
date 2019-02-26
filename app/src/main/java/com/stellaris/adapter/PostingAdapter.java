@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.stellaris.functions.TimeUtil;
+
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
@@ -54,7 +56,7 @@ public class PostingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         final Posting post = getItem(position);
 
         //填充数据
-        postingViewHolder.text_date.setText(post.getDate());
+        postingViewHolder.text_date.setText(TimeUtil.formatDisplayTime(post.getDate(),"yyyy-MM-dd HH:mm:ss"));
         postingViewHolder.text_content.setText(post.getContent());
         postingViewHolder.text_user_name.setText(post.getUserName());
 

@@ -166,7 +166,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void saveUserInfo(HashMap<String,String> mp){
-        UsrManager.setStudentId(mp.get(DBKeys.USR_ID));
+        UsrManager.setStudentId(mp.get(DBKeys.USR_STU_ID)); //这是学号
+        UsrManager.setId(mp.get(DBKeys.USR_ID));            //这是用户唯一ID
         UsrManager.setLogname(mp.get(DBKeys.USR_LOG_NAME));
         UsrManager.setPassword(mp.get(DBKeys.USR_PASWRD));
         UsrManager.setMajor(mp.get(DBKeys.USR_MAJ));
