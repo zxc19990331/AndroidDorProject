@@ -83,9 +83,10 @@ public class DBHandle {
         return executeSqlQuery(sql);
     }
 
-    public static List<Posting> getPostingBySchoolAndBui(String schoolid,String buiid,boolean isDesc){
-        String sql = "SELECT id,DATE_FORMAT(date,'%Y-%m-%d %H:%m:%s')date,user_id,user_name,content,comments,dor_building_id,school_id,type FROM postings WHERE school_id = '"+schoolid+"' AND dor_building_id = '"+ buiid + "' ORDER BY date ";
-        sql += isDesc?"DESC":"ASC";
+    public static List<Posting> getPostingBySchoolAndBui(String schoolid,String buiid,boolean isDesc,String type){
+        String sql = "SELECT id,DATE_FORMAT(date,'%Y-%m-%d %H:%m:%s')date,user_id,user_name,content,comments,dor_building_id,school_id,type FROM postings WHERE school_id = '"
+                +schoolid+"' AND dor_building_id = '"+ buiid + "' AND type = '" + type + "'";
+        sql += isDesc?" ORDER BY date DESC":" ORDER BY date ASC";
         List<Posting> posts = new ArrayList<Posting>();
         Connection conn = DBUtils.getConnection();
         try {

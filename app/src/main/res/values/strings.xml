@@ -32,6 +32,8 @@
     <string name="home_chalema_default">正在获取查房数据...</string>
     <string name="home_meicha">没有哦</string>
     <string name="home_zhengzaicha">正在查房!</string>
+    <string name="home_events">宿舍公告牌</string>
+    <string name="home_ayisaying">阿姨的话</string>
 
     <!--fragment_my_info-->
     <string name="my_info_detail">详细信息</string>

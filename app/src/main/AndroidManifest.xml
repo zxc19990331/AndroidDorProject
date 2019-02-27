@@ -32,7 +32,8 @@
             android:label="@string/title_activity_main_frame" />
         <activity android:name=".DetailInfoActivity" />
         <activity android:name=".AddPostActivity" />
-        <activity android:name=".SettingActivity"></activity>
+        <activity android:name=".SettingActivity" />
+        <activity android:name=".WebDetailActivity"></activity>
     </application>
 
 </manifest>

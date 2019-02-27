@@ -78,6 +78,14 @@ public class MyInfoFragment extends Fragment {
                 QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
         item_payment.setTag(1);
 
+        QMUICommonListItemView item_web = mGroupListView.createItemView(
+                ContextCompat.getDrawable(getContext(), R.drawable.ic_web_asset_black_24dp),
+                "教务系统",
+                null,
+                QMUICommonListItemView.HORIZONTAL,
+                QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
+        item_web.setTag(2);
+
         //应用设置
         QMUICommonListItemView item_setting = mGroupListView.createItemView(
                 ContextCompat.getDrawable(getContext(), R.drawable.ic_settings_black_24dp),
@@ -85,7 +93,7 @@ public class MyInfoFragment extends Fragment {
                 null,
                 QMUICommonListItemView.HORIZONTAL,
                 QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
-        item_setting.setTag(2);
+        item_setting.setTag(3);
 
         //关于作者
         QMUICommonListItemView item_about = mGroupListView.createItemView(
@@ -94,7 +102,7 @@ public class MyInfoFragment extends Fragment {
                 null,
                 QMUICommonListItemView.HORIZONTAL,
                 QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
-        item_about.setTag(3);
+        item_about.setTag(4);
 
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
@@ -105,6 +113,23 @@ public class MyInfoFragment extends Fragment {
                         startActivity(intent);
                     }break;
                     case 2:{
+                        //跳转到到相应学校教务系统官网
+                        String url = "";
+                        switch (UsrManager.getCollegeId()){
+                            case "01" :{
+                                url = "http://jwc.njnu.edu.cn/";
+                                Bundle bundle = new Bundle();
+                                bundle.putString("URL",url);
+                                bundle.putString("TITLE","菁林园");
+                                Intent intent = new Intent(getActivity(),WebDetailActivity.class);
+                                intent.putExtras(bundle);
+                                startActivity(intent,bundle);
+                            }break;
+                            default:break;
+                        }
+                    }break;
+                    case 3:{
+                        //设置界面
                         Intent intent = new Intent(getActivity(), SettingActivity.class);
                         startActivity(intent);
                     }
@@ -120,6 +145,7 @@ public class MyInfoFragment extends Fragment {
                 .setLeftIconSize(size, ViewGroup.LayoutParams.WRAP_CONTENT)
                 .addItemView(item_detail_info, onClickListener)
                 .addItemView(item_payment, onClickListener)
+                .addItemView(item_web,onClickListener)
                 .addItemView(item_setting, onClickListener)
                 .addItemView(item_about, onClickListener)
                 .addTo(mGroupListView);

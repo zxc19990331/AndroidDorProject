@@ -15,6 +15,9 @@ public interface DBKeys {
     String USR_LOG_NAME = "logname";
     String USR_IDENT = "identity";
 
+    String USR_IDENT_AYI = "ayi";
+    String USR_IDENT_STU = "stu";
+
     String POST_ID = "id";
     String POST_DATE = "date";
     String POST_USR_ID = "user_id";
@@ -26,6 +29,7 @@ public interface DBKeys {
     String POST_USR_NAME = "user_name";
 
     String POST_TYPE_STU = "stu";
+    String POST_TYPE_AYI = "ayi";
 
     String ROOM_ID = "id";
     String ROOM_ID_SHORT = "short_id";

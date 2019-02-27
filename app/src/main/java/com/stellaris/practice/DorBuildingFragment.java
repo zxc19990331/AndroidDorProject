@@ -15,6 +15,7 @@ import android.widget.ImageView;
 
 import com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout;
 import com.stellaris.adapter.PostingAdapter;
+import com.stellaris.constants.DBKeys;
 import com.stellaris.constants.MsgStatus;
 import com.stellaris.functions.DBHandle;
 import com.stellaris.manager.UsrManager;
@@ -141,7 +142,7 @@ public class DorBuildingFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                mPosts = DBHandle.getPostingBySchoolAndBui(UsrManager.getCollegeId(), UsrManager.getDorBuildingId(),true);
+                mPosts = DBHandle.getPostingBySchoolAndBui(UsrManager.getCollegeId(), UsrManager.getDorBuildingId(),true, DBKeys.POST_TYPE_STU);
                 Message msg = new Message();
                 msg.what = MsgStatus.POST_GOT;
                 msg.obj = mPosts;

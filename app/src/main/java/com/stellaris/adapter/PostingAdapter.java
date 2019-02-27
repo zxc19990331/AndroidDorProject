@@ -56,6 +56,7 @@ public class PostingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         final Posting post = getItem(position);
 
         //填充数据
+        //日期格式化
         postingViewHolder.text_date.setText(TimeUtil.formatDisplayTime(post.getDate(),"yyyy-MM-dd HH:mm:ss"));
         postingViewHolder.text_content.setText(post.getContent());
         postingViewHolder.text_user_name.setText(post.getUserName());
