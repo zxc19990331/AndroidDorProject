@@ -100,9 +100,11 @@ public class LoginActivity extends AppCompatActivity {
     @OnClick({R.id.login_text_register,R.id.login_text_forget,R.id.login_button_login})
     public void onViewClicked(View view){
         switch (view.getId()){
-            case R.id.login_text_register:
-                //注册
-                break;
+            //注册
+            case R.id.login_text_register:{
+                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+                startActivity(intent);
+            }break;
             case R.id.login_text_forget:
                 //忘记密码
                 break;
@@ -119,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             HashMap<String, String> mp =
-                                    DBHandle.getAllInfoByName(logname);
+                                    DBHandle.getAllInfoByLogname(logname);
 
                             Message msg = new Message();
                             if(mp == null || !password.equals(mp.get(DBKeys.USR_PASWRD))) {
@@ -177,7 +179,7 @@ public class LoginActivity extends AppCompatActivity {
         UsrManager.setIdentity(mp.get(DBKeys.USR_IDENT));
         UsrManager.setDorRoomId(mp.get(DBKeys.USR_DOR_ROOM_ID));
         UsrManager.setDorRoomShortId(mp.get(DBKeys.USR_DOR_ROOM_SHORT));
-        UsrManager.setDesc(mp.get(DBKeys.USR_DES));
+        UsrManager.setDesc(mp.get(DBKeys.USR_DESR));
         UsrManager.setName(mp.get(DBKeys.USR_NAME));
     }
 

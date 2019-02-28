@@ -17,7 +17,7 @@ public class test {
 
     public static void main(String[] args) throws Exception {
 
-        System.out.print(TimeUtil.formatDisplayTime("2019-2-26 14:30:20","yyyy-MM-dd HH:mm:ss"));
+        System.out.print(TimeUtil.formatDisplayTime("2019-2-28 18:35:20","yyyy-MM-dd HH:mm:ss"));
     }
 
     public static Connection getconnection()

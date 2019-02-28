@@ -10,7 +10,7 @@ public interface DBKeys {
     String USR_DOR_ROOM_SHORT = "dor_room_short_id";
     String USR_MAJ = "major";
     String USR_SEX = "sex";
-    String USR_DES = "desc";
+    String USR_DESR = "descr";
     String USR_PASWRD = "password";
     String USR_LOG_NAME = "logname";
     String USR_IDENT = "identity";

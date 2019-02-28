@@ -2,10 +2,9 @@ package com.stellaris.functions;
 
 import android.util.Log;
 
-import com.stellaris.functions.DBUtils;
 import com.stellaris.model.Posting;
-import com.stellaris.model.Event;
 import com.stellaris.constants.DBKeys;
+import com.stellaris.model.User;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -34,11 +33,11 @@ public class DBHandle {
         try {
             Statement st = conn.createStatement();
             ResultSet res = st.executeQuery(sql);
-            if (res == null) {
-                return null;
-            } else {
+            //if (res == null) {
+            //    return null;
+            //} else {
+            while(res.next()){
                 int cnt = res.getMetaData().getColumnCount();
-                res.next();
                 //返回用户所有信息键的值 2019/1/21 id logname password identity
                 for (int i = 1; i <= cnt; ++i) {
                     String field = res.getMetaData().getColumnName(i);
@@ -49,6 +48,7 @@ public class DBHandle {
                 res.close();
                 return map;
             }
+            return null;
         } catch (Exception e) {
             e.printStackTrace();
             Log.d("DBHANDLE", " 查询语句有误");
@@ -73,8 +73,18 @@ public class DBHandle {
     }
 
 
-    public static HashMap<String, String> getAllInfoByName(String name) {
+    public static HashMap<String, String> getAllInfoByLogname(String name) {
         String sql = "SELECT * FROM users WHERE logname = '" + name + "'";
+        return executeSqlQuery(sql);
+    }
+
+    public static HashMap<String, String> getStuInfoByIdAndSch(String id,String sch) {
+        String sql = "SELECT * FROM stus WHERE stu_id = '" + id + "' AND college_id = '"+sch+"'";
+        return executeSqlQuery(sql);
+    }
+
+    public static HashMap<String,String> getUserInfoByStuIdAndSch(String stu_id,String sch){
+        String sql = "SELECT * FROM users WHERE stu_id = '" + stu_id + "' AND college_id = '"+sch+"'";
         return executeSqlQuery(sql);
     }
 
@@ -84,7 +94,7 @@ public class DBHandle {
     }
 
     public static List<Posting> getPostingBySchoolAndBui(String schoolid,String buiid,boolean isDesc,String type){
-        String sql = "SELECT id,DATE_FORMAT(date,'%Y-%m-%d %H:%m:%s')date,user_id,user_name,content,comments,dor_building_id,school_id,type FROM postings WHERE school_id = '"
+        String sql = "SELECT id,DATE_FORMAT(date,'%Y-%m-%d %T')date,user_id,user_name,content,comments,dor_building_id,school_id,type FROM postings WHERE school_id = '"
                 +schoolid+"' AND dor_building_id = '"+ buiid + "' AND type = '" + type + "'";
         sql += isDesc?" ORDER BY date DESC":" ORDER BY date ASC";
         List<Posting> posts = new ArrayList<Posting>();
@@ -126,6 +136,22 @@ public class DBHandle {
                 DBKeys.POST_ID,DBKeys.POST_DATE,DBKeys.POST_USR_ID,DBKeys.POST_CONTENT,DBKeys.POST_COM,DBKeys.POST_BUI_ID,DBKeys.POST_SCH_ID,DBKeys.POST_TYPE,DBKeys.POST_USR_NAME,
                 post.getId(),post.getDate(),post.getUserID(),post.getContent(),post.getComments(),post.getDorbuildingId(),post.getSchoolId(),post.getType(),post.getUserName());
 
+        return executeInsertSql(sql);
+    }
+
+    public static boolean insertUser(User user){
+        //设置随机uuid
+        user.setId(ShortUUID.generateShortUuid());
+        //宿舍全ID = 学校id+宿舍楼id+宿舍号id 虽然我觉得很可能是没必要的数据库设计但我就是这么写了
+        user.setDorRoomId(user.getCollegeId()+user.getDorBuildingId()+user.getDorRoomShortId());
+        //第二天发现这里的bug是有个字段写重复了……果然神志模糊
+        //不要把desc这种关键字当做字段名……debug的血泪经验
+        String sql = String.format("INSERT INTO users (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) VALUE('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')",
+                DBKeys.USR_ID,DBKeys.USR_LOG_NAME,DBKeys.USR_PASWRD,DBKeys.USR_IDENT,DBKeys.USR_SEX,DBKeys.USR_COL_ID,
+                DBKeys.USR_DOR_BUI_ID,DBKeys.USR_DOR_ROOM_ID,DBKeys.USR_DOR_ROOM_SHORT,DBKeys.USR_NAME,DBKeys.USR_STU_ID,DBKeys.USR_MAJ,DBKeys.USR_DESR,
+                user.getId(),user.getLogname(),user.getPassword(),user.getIdentity(),user.getSex(),user.getCollegeId(),
+                user.getDorBuildingId(),user.getDorRoomId(),user.getDorRoomShortId(),user.getName(),user.getStudentId(),user.getMajor(),user.getDesc());
+       Log.d("INSERT-SQL",sql);
         return executeInsertSql(sql);
     }
 

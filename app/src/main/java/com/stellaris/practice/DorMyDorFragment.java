@@ -8,6 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class DorMyDorFragment extends Fragment {
     @Override
@@ -19,7 +24,14 @@ public class DorMyDorFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_dor_my_dor, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_dor_my_dor, container, false);
+        ButterKnife.bind(this, rootView);
+        return rootView;
+
+    }
+    //TODO:继续完善我的宿舍界面的数据接口
+    private void setData(){
+
     }
 
 }

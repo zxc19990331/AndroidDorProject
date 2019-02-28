@@ -27,6 +27,21 @@
 
     <string name="navigation_bottom_height">56dp</string>
 
+    <!--register and login-->
+    <string name="input_logname">手机号/用户名/邮箱</string>
+    <string name="input_password">请输入密码</string>
+    <string name="input_password_again">请再次确认密码</string>
+    <string name="input_sch">学校</string>
+    <string name="input_bui">宿舍楼</string>
+    <string name="input_dor">宿舍</string>
+    <string name="input_stu_id">学号</string>
+    <string name="input_maj">专业</string>
+    <string name="input_sex">性别</string>
+
+    <string-array name="school_list">
+        <item>01 南京师范大学</item>
+    </string-array>
+
     <!--fragment_home-->
     <string name="home_cha_le_ma">查房了吗</string>
     <string name="home_chalema_default">正在获取查房数据...</string>

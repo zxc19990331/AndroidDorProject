@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     tools:context=".DorBuildingFragment">
 
-    <!-- TODO: 找人的界面、读取帖子列表的接口 -->
+    <!-- TODO: 找人的界面-->
 
     <com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout
         android:id="@+id/pull_to_refresh"
