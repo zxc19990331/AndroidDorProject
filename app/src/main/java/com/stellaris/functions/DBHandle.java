@@ -72,6 +72,10 @@ public class DBHandle {
         }
     }
 
+    public static HashMap<String,String> getDorInfo(String dor_id){
+        String sql = "SELECT * FROM dor_room WHERE id = '" + dor_id + "'";
+        return executeSqlQuery(sql);
+    }
 
     public static HashMap<String, String> getAllInfoByLogname(String name) {
         String sql = "SELECT * FROM users WHERE logname = '" + name + "'";
@@ -93,6 +97,41 @@ public class DBHandle {
         return executeSqlQuery(sql);
     }
 
+    public static List<User> getUsersByDor(String dor_id){
+        String sql = String.format("SELECT * FROM users WHERE %s = '%s'",DBKeys.USR_DOR_ROOM_ID,dor_id);
+        return getUserList(sql);
+    }
+
+    public static List<User> getUsersByDor(String sch_id,String bui_id,String dor_id){
+        String sql = String.format("SELECT * FROM users WHERE %s = '%s' AND %s = '%s' AND %s = '%s'",DBKeys.USR_COL_ID,sch_id,DBKeys.USR_DOR_BUI_ID,bui_id,DBKeys.USR_DOR_ROOM_SHORT,dor_id);
+        return getUserList(sql);
+    }
+
+    private static List<User> getUserList(String sql){
+        List<User> users = new ArrayList<User>();
+        Connection conn = DBUtils.getConnection();
+        try {
+            Statement st = conn.createStatement();
+            ResultSet res = st.executeQuery(sql);
+            while (res.next()) {
+                User user = new User();
+                HashMap<String,String> map = new HashMap<>();
+                int cnt = res.getMetaData().getColumnCount();
+                for (int i = 1; i <= cnt; ++i) {
+                    String field = res.getMetaData().getColumnName(i);
+                    map.put(field, res.getString(field));
+                }
+                user.init(map);
+                users.add(user);
+            }
+            return users;
+        }catch (Exception e) {
+            e.printStackTrace();
+            Log.d("DBHANDLE", " 获取User列表失败");
+            return null;
+        }
+    }
+
     public static List<Posting> getPostingBySchoolAndBui(String schoolid,String buiid,boolean isDesc,String type){
         String sql = "SELECT id,DATE_FORMAT(date,'%Y-%m-%d %T')date,user_id,user_name,content,comments,dor_building_id,school_id,type FROM postings WHERE school_id = '"
                 +schoolid+"' AND dor_building_id = '"+ buiid + "' AND type = '" + type + "'";
@@ -106,6 +145,7 @@ public class DBHandle {
                 return null;
             } else {
                 while(res.next()){
+                    //可以给Posting增加init方法
                     Posting post = new Posting();
                     post.setComments(res.getString(DBKeys.POST_COM));
                     post.setContent(res.getString(DBKeys.POST_CONTENT));

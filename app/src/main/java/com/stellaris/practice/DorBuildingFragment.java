@@ -89,11 +89,9 @@ public class DorBuildingFragment extends Fragment {
                     mRecyclePosts.setAdapter(adapter);
                 }
                 break;
-
                 default:
                     break;
             }
-
             return false;
         }
     });

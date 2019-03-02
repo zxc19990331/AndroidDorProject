@@ -1,85 +1,88 @@
 package com.stellaris.practice;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.stellaris.adapter.PostingAdapter;
+import com.stellaris.constants.DBKeys;
+import com.stellaris.constants.MsgStatus;
+import com.stellaris.functions.DBHandle;
+import com.stellaris.manager.UsrManager;
+import com.stellaris.model.Posting;
+
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class HomeFragment extends Fragment {
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    private String mParam1;
-    private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    //TODO: 增加百度地图API为基础的查房打卡系统
+    @BindView(R.id.home_chalema_detail)
+    TextView mChalemaDetail;
 
-    public HomeFragment() {
+    @BindView(R.id.home_recycle_events)
+    RecyclerView mEvents;
 
-    }
+    @BindView(R.id.home_ayi_posts)
+    RecyclerView mAyiPosts;
 
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+    List<Posting> mPosts;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        ButterKnife.bind(this, rootView);
+        return rootView;
     }
 
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+
+    private void setPostings() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //载入AYI身份的postings
+                mPosts = DBHandle.getPostingBySchoolAndBui(UsrManager.getCollegeId(), UsrManager.getDorBuildingId(),true, DBKeys.POST_TYPE_AYI);
+                Message msg = new Message();
+                msg.what = MsgStatus.POST_GOT;
+                msg.obj = mPosts;
+                handler.sendMessage(msg);
+            }
+        }).start();
+    }
+
+    Handler handler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            switch (msg.what) {
+                case MsgStatus.POST_GOT: {
+                    PostingAdapter adapter = new PostingAdapter(mPosts);
+                    mAyiPosts.setAdapter(adapter);
+                }
+                break;
+                default:
+                    break;
+            }
+            return false;
         }
-    }
+    });
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }

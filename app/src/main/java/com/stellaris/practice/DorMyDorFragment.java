@@ -1,20 +1,36 @@
 package com.stellaris.practice;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.stellaris.adapter.DormateAdapter;
+import com.stellaris.constants.DBKeys;
+import com.stellaris.constants.MsgStatus;
+import com.stellaris.functions.DBHandle;
+import com.stellaris.manager.UsrManager;
+import com.stellaris.model.User;
+
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DorMyDorFragment extends Fragment {
+    @BindView(R.id.dor_my_dor_mates)
+    RecyclerView mRecyclerMates;
+
+    @BindView(R.id.dor_my_pay_detail)
+    TextView mPayDetail;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,12 +42,64 @@ public class DorMyDorFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_dor_my_dor, container, false);
         ButterKnife.bind(this, rootView);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setAutoMeasureEnabled(true);
+
+        //这行不要忘了
+        mRecyclerMates.setLayoutManager(linearLayoutManager);
+        mRecyclerMates.setNestedScrollingEnabled(false);
+        setMatesData();
+        setPayment();
         return rootView;
 
     }
-    //TODO:继续完善我的宿舍界面的数据接口
-    private void setData(){
+
+    List<User> mUsers;
+    HashMap<String, String> dorInfo;
+
+    private void setMatesData() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Message msg = new Message();
+                mUsers = DBHandle.getUsersByDor(UsrManager.getDorRoomId());
+                msg.what = MsgStatus.DOR_MATES_GOT;
+                handler.sendMessage(msg);
+            }
+        }).start();
 
     }
+
+    private void setPayment() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Message msg = new Message();
+                dorInfo = DBHandle.getDorInfo(UsrManager.getDorRoomId());
+                msg.what = MsgStatus.DOR_PAYMENT_GOT;
+                handler.sendMessage(msg);
+            }
+        }).start();
+    }
+
+    Handler handler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            switch (msg.what) {
+                case MsgStatus.DOR_MATES_GOT: {
+                    DormateAdapter adapter = new DormateAdapter(mUsers);
+                    mRecyclerMates.setAdapter(adapter);
+                }
+                break;
+                case MsgStatus.DOR_PAYMENT_GOT: {
+                    String newdescr = String.format("上次查询时间：%s\n上次查询结果 水费:%s 电费:%s", dorInfo.get(DBKeys.ROOM_LAST_REQ_DATE), dorInfo.get(DBKeys.ROOM_WATER), dorInfo.get(DBKeys.ROOM_POWER));
+                    mPayDetail.setText(newdescr);
+                }break;
+                default:
+                    break;
+            }
+            return false;
+        }
+    });
 
 }

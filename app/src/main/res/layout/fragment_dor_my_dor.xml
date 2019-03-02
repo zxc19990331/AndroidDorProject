@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,7 +7,7 @@
     tools:context=".DorMyDorFragment"
     android:background="@color/colorBg">
 
-    <!-- TODO: 舍友数据接口、水电费接口、宿舍事件、最近访客（？ -->
+    <!-- TODO: 水电费接口、宿舍事件、最近访客（？ -->
 
 
     <LinearLayout
@@ -25,11 +25,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/dor_my_mates" />
-
                 <android.support.v7.widget.RecyclerView
+                    android:id="@+id/dor_my_dor_mates"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="10dp"/>
+                    android:layout_height="wrap_content" />
 
 
         </LinearLayout>
@@ -38,22 +37,33 @@
             android:id="@+id/dor_my_dor_layout_pay"
             style="@style/StTitleBG"
             android:layout_width="match_parent"
-            android:orientation="vertical">
-                <TextView
-                    android:id="@+id/dor_my_dor_text_pay"
-                    style="@style/StCommonTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/dor_my_pay" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/dor_my_dor_text_pay"
+                style="@style/StCommonRowTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dor_my_pay" />
+
+            <View
+                android:id="@+id/view_div"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@color/qmui_config_color_gray_6" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/dor_my_pay_detail"
+                    style="@style/StDateItem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:lineSpacingMultiplier="1.2"
+                    android:layout_gravity="center_vertical"
                     android:text="@string/dor_my_pay_desc"
-                    android:textColor="@color/qmui_config_color_gray_1"
-                    android:layout_marginBottom="10dp"/>
+                    android:textColor="@color/qmui_config_color_gray_1" />
 
 
         </LinearLayout>
@@ -62,7 +72,7 @@
             android:id="@+id/dor_my_dor_layout_event"
             style="@style/StTitleBG"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
                 <TextView
                     style="@style/StCommonTitle"
@@ -75,4 +85,4 @@
 
     </LinearLayout>
 
-</FrameLayout>
+</android.support.v4.widget.NestedScrollView>

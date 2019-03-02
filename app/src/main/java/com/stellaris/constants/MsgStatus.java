@@ -19,4 +19,7 @@ public interface MsgStatus {
     int REG_SUCCESS = 0x6;
     int REG_FAIL = 0x7;
     int REG_NO_STU_ID = 0x8;
+
+    int DOR_MATES_GOT = 0x0;
+    int DOR_PAYMENT_GOT = 0x1;
 }

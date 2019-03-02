@@ -39,7 +39,7 @@ public interface DBKeys {
     String ROOM_STU_COUNT = "student_count";
     String ROOM_POWER = "power_rate";
     String ROOM_WATER = "water_rate";
-    String ROOM_LAST_REQ_DATE = "lase_requry_date";
+    String ROOM_LAST_REQ_DATE = "last_requry_date";
     String ROOM_EVENTS = "events";
 
 }
