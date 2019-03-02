@@ -1,5 +1,6 @@
 package com.stellaris.practice;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,6 +23,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class HomeFragment extends Fragment {
@@ -38,6 +40,10 @@ public class HomeFragment extends Fragment {
     RecyclerView mAyiPosts;
 
     List<Posting> mPosts;
+
+    @BindView(R.id.home_title_events)
+    TextView mTitleEvents;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +55,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, rootView);
+        setPostings();
         return rootView;
     }
 
@@ -58,7 +65,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void run() {
                 //载入AYI身份的postings
-                mPosts = DBHandle.getPostingBySchoolAndBui(UsrManager.getCollegeId(), UsrManager.getDorBuildingId(),true, DBKeys.POST_TYPE_AYI);
+                mPosts = DBHandle.getPostingBySchoolAndBui(UsrManager.getCollegeId(), UsrManager.getDorBuildingId(), true, DBKeys.POST_TYPE_AYI);
                 Message msg = new Message();
                 msg.what = MsgStatus.POST_GOT;
                 msg.obj = mPosts;
@@ -82,6 +89,21 @@ public class HomeFragment extends Fragment {
             return false;
         }
     });
+
+
+    @OnClick({R.id.home_chalema_detail, R.id.home_title_events, R.id.home_title_ayisaying})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.home_chalema_detail:
+                break;
+            case R.id.home_title_events:{
+                Intent intent = new Intent(getActivity(),EventShowActivity.class);
+                startActivity(intent);
+            }break;
+            case R.id.home_title_ayisaying:
+                break;
+        }
+    }
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);

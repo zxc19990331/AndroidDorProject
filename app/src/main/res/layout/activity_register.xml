@@ -100,10 +100,6 @@
                 android:textColor="@color/colorWhite"
                 android:textStyle="bold"/>
 
-
-
-
-
         </LinearLayout>
     </ScrollView>
 

@@ -22,4 +22,7 @@ public interface MsgStatus {
 
     int DOR_MATES_GOT = 0x0;
     int DOR_PAYMENT_GOT = 0x1;
+
+    int EVENT_SEND_SUCCESS = 0x1;
+    int EVENT_SEND_FAIL = 0x0;
 }

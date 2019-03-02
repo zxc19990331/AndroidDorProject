@@ -17,7 +17,7 @@ public class test {
 
     public static void main(String[] args) throws Exception {
 
-        System.out.print(DBHandle.getUsersByDor("0105308"));
+        System.out.print(DBHandle.getStuInfoByIdAndSch("19170122","01"));
     }
 
     public static Connection getconnection()

@@ -34,7 +34,9 @@
         <activity android:name=".AddPostActivity" />
         <activity android:name=".SettingActivity" />
         <activity android:name=".WebDetailActivity" />
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".AddEventActivity" />
+        <activity android:name=".EventShowActivity"></activity>
     </application>
 
 </manifest>

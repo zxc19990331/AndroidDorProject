@@ -83,7 +83,7 @@ public class AddPostActivity extends AppCompatActivity {
                 post.setComments("");
                 //生成短uuid
                 post.setId(ShortUUID.generateShortUuid());
-                //TODO：type方面的其他设置有待完善
+                //完善个头，不完善了
 
                 post.setType(UsrManager.getIdentity().equals(DBKeys.USR_IDENT_AYI)?DBKeys.POST_TYPE_AYI:DBKeys.POST_TYPE_STU);
 

@@ -42,4 +42,14 @@ public interface DBKeys {
     String ROOM_LAST_REQ_DATE = "last_requry_date";
     String ROOM_EVENTS = "events";
 
+    String EVENT_ID = "id";
+    String EVENT_TITLE = "title";
+    String EVENT_TYPE = "type";
+    String EVENT_SCH = "school_id";
+    String EVENT_BUI = "building_id";
+    String EVENT_ROOM = "room_id";
+    String EVENT_DATE = "date";
+    String EVENT_NOTE = "note";
+    String EVENT_USR_ID = "user_id";
+
 }

@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -92,12 +93,14 @@ public class RegisterActivity extends AppCompatActivity {
                 String password_again = mPasswordAgain.getText().toString();
                 String stu_id = mStuId.getText().toString();
                 //暂时先截取两位序号
-                String sch_id = mSch.getText().toString().substring(0,1);
+                String sch_id = mSch.getText().toString();
                 //我知道这句判断跟下一句重复了，但是我还是要写
-                if (logname.equals("") || password.equals("") || password_again.equals("")) {
+                if (logname.equals("") || password.equals("") || password_again.equals("")||stu_id.equals("")||sch_id.equals("")) {
                     Toast.makeText(RegisterActivity.this, "输入不可为空!", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                String sch_id_final = sch_id.substring(0,2);
+                Log.d(TAG,sch_id+"---"+sch_id_final);
                 if (logname.length() < MIN_LENGTH || password.length() < MIN_LENGTH) {
                     Toast.makeText(RegisterActivity.this, "用户名和密码长度至少7位!", Toast.LENGTH_SHORT).show();
                     return;
@@ -115,14 +118,14 @@ public class RegisterActivity extends AppCompatActivity {
                         //若logname不存在
                         if(mp==null){
                             //mp2判断是否存在该学号
-                            final HashMap<String,String >mp2 = DBHandle.getStuInfoByIdAndSch(stu_id,sch_id);
+                            final HashMap<String,String >mp2 = DBHandle.getStuInfoByIdAndSch(stu_id,sch_id_final);
                             //若mp2不存在即不存在该学号
                             if(mp2==null){
                                 msg.what=MsgStatus.REG_NO_STU_ID;
                             }
                             //存在该学号
                             else{
-                                HashMap<String,String>mp3 = DBHandle.getUserInfoByStuIdAndSch(stu_id,sch_id);
+                                HashMap<String,String>mp3 = DBHandle.getUserInfoByStuIdAndSch(stu_id,sch_id_final);
                                 //mp3表示是否已经有用户绑定了该学号
                                 //没有用户绑定该学号
                                 if(mp3==null){

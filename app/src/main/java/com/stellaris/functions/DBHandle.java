@@ -2,6 +2,7 @@ package com.stellaris.functions;
 
 import android.util.Log;
 
+import com.stellaris.model.Event;
 import com.stellaris.model.Posting;
 import com.stellaris.constants.DBKeys;
 import com.stellaris.model.User;
@@ -33,9 +34,6 @@ public class DBHandle {
         try {
             Statement st = conn.createStatement();
             ResultSet res = st.executeQuery(sql);
-            //if (res == null) {
-            //    return null;
-            //} else {
             while(res.next()){
                 int cnt = res.getMetaData().getColumnCount();
                 //返回用户所有信息键的值 2019/1/21 id logname password identity
@@ -72,31 +70,61 @@ public class DBHandle {
         }
     }
 
+    //有很多方法非常冗余，但这是寒假刚设计数据库时的我的锅，不是现在正在写bug的我的锅
+    //通过宿舍长ID获得宿舍信息
     public static HashMap<String,String> getDorInfo(String dor_id){
         String sql = "SELECT * FROM dor_room WHERE id = '" + dor_id + "'";
         return executeSqlQuery(sql);
     }
 
+    //通过用户名获得user信息
     public static HashMap<String, String> getAllInfoByLogname(String name) {
         String sql = "SELECT * FROM users WHERE logname = '" + name + "'";
         return executeSqlQuery(sql);
     }
-
+    //通过学号和学校获得stu信息
     public static HashMap<String, String> getStuInfoByIdAndSch(String id,String sch) {
         String sql = "SELECT * FROM stus WHERE stu_id = '" + id + "' AND college_id = '"+sch+"'";
+        Log.d("DBHANDLE",sql);
         return executeSqlQuery(sql);
     }
-
+    //通过学号和学校获得user信息
     public static HashMap<String,String> getUserInfoByStuIdAndSch(String stu_id,String sch){
         String sql = "SELECT * FROM users WHERE stu_id = '" + stu_id + "' AND college_id = '"+sch+"'";
         return executeSqlQuery(sql);
     }
-
+    //通过id获得user信息
     public static HashMap<String, String> getDetailById(String id){
         String sql = "SELECT name,stu_id,college_id,dor_building_id,dor_room_short_id,major,sex FROM users WHERE id = '"+ id + "'";
         return executeSqlQuery(sql);
     }
 
+    //宿舍相关
+
+    //通过宿舍楼号获得宿舍号列表
+    public static List<String> getDorIdsByBuiIdAndSchoolId(String bui_id,String sch_id){
+        String sql = String.format("SELECT DISTINCT short_id FROM dor_room WHERE school_id = '%s' AND building_id = '%s'",sch_id,bui_id);
+        List<String> dors = new ArrayList<String>();
+        Connection conn = DBUtils.getConnection();
+        try {
+            Statement st = conn.createStatement();
+            ResultSet res = st.executeQuery(sql);
+            while (res.next()) {
+                String dor = res.getString(DBKeys.ROOM_ID_SHORT);
+                dors.add(dor);
+            }
+            res.close();
+            conn.close();
+            return dors;
+        }catch (Exception e) {
+            e.printStackTrace();
+            Log.d("DBHANDLE", " 获取宿舍id列表失败");
+            return null;
+        }
+    }
+
+
+    //通过dor_id获得用户列表
     public static List<User> getUsersByDor(String dor_id){
         String sql = String.format("SELECT * FROM users WHERE %s = '%s'",DBKeys.USR_DOR_ROOM_ID,dor_id);
         return getUserList(sql);
@@ -124,6 +152,8 @@ public class DBHandle {
                 user.init(map);
                 users.add(user);
             }
+            res.close();
+            conn.close();
             return users;
         }catch (Exception e) {
             e.printStackTrace();
@@ -176,6 +206,14 @@ public class DBHandle {
                 DBKeys.POST_ID,DBKeys.POST_DATE,DBKeys.POST_USR_ID,DBKeys.POST_CONTENT,DBKeys.POST_COM,DBKeys.POST_BUI_ID,DBKeys.POST_SCH_ID,DBKeys.POST_TYPE,DBKeys.POST_USR_NAME,
                 post.getId(),post.getDate(),post.getUserID(),post.getContent(),post.getComments(),post.getDorbuildingId(),post.getSchoolId(),post.getType(),post.getUserName());
 
+        return executeInsertSql(sql);
+    }
+
+    public static boolean sendEvent(Event event){
+        event.setId(ShortUUID.generateShortUuid());
+        String sql = String.format("INSERT INTO events (%s,%s,%s,%s,%s,%s,%s,%s,%s) VALUE ('%s','%s','%s','%s','%s','%s','%s','%s','%s')",
+                DBKeys.EVENT_ID,DBKeys.EVENT_TITLE,DBKeys.EVENT_TYPE,DBKeys.EVENT_SCH,DBKeys.EVENT_BUI,DBKeys.EVENT_ROOM,DBKeys.EVENT_DATE,DBKeys.EVENT_NOTE,DBKeys.EVENT_USR_ID,
+                event.getId(),event.getTitle(),event.getType(),event.getSchoolId(),event.getBuiId(),event.getRoomId(),event.getDate(),event.getNote(),event.getUserId());
         return executeInsertSql(sql);
     }
 
