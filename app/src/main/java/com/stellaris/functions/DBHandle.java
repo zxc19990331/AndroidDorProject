@@ -137,6 +137,14 @@ public class DBHandle {
         return getEventList(sql);
     }
 
+    //用like来查找包含字符串，我真是个小天才
+    //复杂度应该迟早会爆炸吧！
+    public static List<Event> getEventsByBuiAndSchAndRoom(String bui_id,String sch_id,String room_id,int limit){
+        String sql = String.format("SELECT * FROM events WHERE %s = '%s' AND %s = '%s' AND %s LIKE '%s' ORDER BY date DESC LIMIT %s",
+                DBKeys.EVENT_BUI,bui_id,DBKeys.EVENT_SCH,sch_id,DBKeys.EVENT_ROOM,"%"+room_id+"%",String.valueOf(limit));
+        return getEventList(sql);
+    }
+
     private static List<Event> getEventList(String sql){
         List<Event> events = new ArrayList<>();
         Connection conn = DBUtils.getConnection();

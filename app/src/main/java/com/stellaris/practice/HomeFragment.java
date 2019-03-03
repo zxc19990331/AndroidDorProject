@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout;
@@ -47,11 +48,14 @@ public class HomeFragment extends Fragment {
 
     List<Event> mEventShow;
 
-    @BindView(R.id.home_title_events)
+    @BindView(R.id.home_title_events_more)
     TextView mTitleEvents;
 
     @BindView(R.id.pull_to_refresh)
     QMUIPullRefreshLayout mPullRefreshLayout;
+
+    @BindView(R.id.dor_bui_image_add)
+    ImageView dorBuiImageAdd;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -160,20 +164,28 @@ public class HomeFragment extends Fragment {
     });
 
 
-    @OnClick({R.id.home_chalema_detail, R.id.home_title_events, R.id.home_title_ayisaying})
+    @OnClick({R.id.home_chalema_detail, R.id.home_title_events_more, R.id.home_title_ayisaying,R.id.dor_bui_image_add})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.home_chalema_detail:
                 break;
-            case R.id.home_title_events: {
+            case R.id.home_title_events_more: {
+                Bundle bundle = new Bundle();
+                bundle.putString("type", "all");
                 Intent intent = new Intent(getActivity(), EventShowActivity.class);
-                startActivity(intent);
+                intent.putExtras(bundle);
+                startActivity(intent, bundle);
             }
             break;
             case R.id.home_title_ayisaying:
                 break;
+            case R.id.dor_bui_image_add:{
+                Intent intent = new Intent(getActivity(),AddPostActivity.class);
+                startActivity(intent);
+            }break;
         }
     }
+
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);

@@ -74,13 +74,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
                 <TextView
                     style="@style/StCommonTitle"
                     android:id="@+id/dor_my_dor_text_event"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/dor_my_event" />
+                <TextView
+                    style="@style/StDateItem"
+                    android:id="@+id/dor_my_dor_text_event_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/dor_my_more" />
+            </RelativeLayout>
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/dor_my_dor_events"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
     </LinearLayout>

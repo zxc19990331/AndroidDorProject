@@ -38,14 +38,17 @@ public class EventShowActivity extends AppCompatActivity {
     private String TAG = "宿舍事件";
     private int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
     List<Event> mEventShow;
+    private Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_show);
         ButterKnife.bind(this);
+        bundle = getIntent().getExtras();
         initTopbar();
         initView();
+        initRefresh();
         setEvents();
     }
 
@@ -117,8 +120,12 @@ public class EventShowActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                //载入AYI身份的postings
-                mEventShow = DBHandle.getEventsByBuiAndSch(UsrManager.getDorBuildingId(), UsrManager.getCollegeId(), 20);
+                String type = bundle.getString("type","");
+                if(type.equals("all")) {
+                    mEventShow = DBHandle.getEventsByBuiAndSch(UsrManager.getDorBuildingId(), UsrManager.getCollegeId(), 20);
+                }else{
+                    mEventShow = DBHandle.getEventsByBuiAndSchAndRoom(UsrManager.getDorBuildingId(), UsrManager.getCollegeId(),UsrManager.getDorRoomShortId(),20);
+                }
                 Message msg = new Message();
                 msg.what = MsgStatus.EVENT_GOT;
                 msg.obj = mEventShow;
@@ -134,8 +141,7 @@ public class EventShowActivity extends AppCompatActivity {
                 case MsgStatus.EVENT_GOT: {
                     EventAdapter adapter = new EventAdapter(EventShowActivity.this, mEventShow);
                     mRecycleView.setAdapter(adapter);
-                }
-                break;
+                }break;
                 default:
                     break;
             }

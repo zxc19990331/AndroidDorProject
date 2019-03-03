@@ -26,5 +26,5 @@ public interface MsgStatus {
     int EVENT_SEND_SUCCESS = 0x1;
     int EVENT_SEND_FAIL = 0x0;
 
-    int EVENT_GOT = 0x0;
+    int EVENT_GOT = 0x3;
 }

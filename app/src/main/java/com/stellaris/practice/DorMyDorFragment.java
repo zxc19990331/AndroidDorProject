@@ -1,5 +1,6 @@
 package com.stellaris.practice;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,17 +13,21 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.stellaris.adapter.DormateAdapter;
+import com.stellaris.adapter.EventAdapter;
 import com.stellaris.constants.DBKeys;
 import com.stellaris.constants.MsgStatus;
 import com.stellaris.functions.DBHandle;
 import com.stellaris.manager.UsrManager;
+import com.stellaris.model.Event;
 import com.stellaris.model.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class DorMyDorFragment extends Fragment {
     @BindView(R.id.dor_my_dor_mates)
@@ -30,6 +35,12 @@ public class DorMyDorFragment extends Fragment {
 
     @BindView(R.id.dor_my_pay_detail)
     TextView mPayDetail;
+    @BindView(R.id.dor_my_dor_events)
+    RecyclerView mRecyclerEvents;
+    @BindView(R.id.dor_my_dor_text_event_more)
+    TextView dorMyDorTextEventMore;
+
+    private List<Event> mEventShow = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,11 +56,17 @@ public class DorMyDorFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setAutoMeasureEnabled(true);
 
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getActivity());
+        linearLayoutManager2.setAutoMeasureEnabled(true);
+
         //这行不要忘了
         mRecyclerMates.setLayoutManager(linearLayoutManager);
         mRecyclerMates.setNestedScrollingEnabled(false);
+        mRecyclerEvents.setLayoutManager(linearLayoutManager2);
+        mRecyclerEvents.setNestedScrollingEnabled(false);
         setMatesData();
         setPayment();
+        setEvents();
         return rootView;
 
     }
@@ -82,6 +99,20 @@ public class DorMyDorFragment extends Fragment {
         }).start();
     }
 
+    private void setEvents() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //载入AYI身份的postings
+                mEventShow = DBHandle.getEventsByBuiAndSchAndRoom(UsrManager.getDorBuildingId(), UsrManager.getCollegeId(),UsrManager.getDorRoomShortId(),2);
+                Message msg = new Message();
+                msg.what = MsgStatus.EVENT_GOT;
+                msg.obj = mEventShow;
+                handler.sendMessage(msg);
+            }
+        }).start();
+    }
+
     Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -94,7 +125,13 @@ public class DorMyDorFragment extends Fragment {
                 case MsgStatus.DOR_PAYMENT_GOT: {
                     String newdescr = String.format("上次查询时间：%s\n上次查询结果 水费:%s 电费:%s", dorInfo.get(DBKeys.ROOM_LAST_REQ_DATE), dorInfo.get(DBKeys.ROOM_WATER), dorInfo.get(DBKeys.ROOM_POWER));
                     mPayDetail.setText(newdescr);
-                }break;
+                }
+                break;
+                case MsgStatus.EVENT_GOT: {
+                    EventAdapter adapter = new EventAdapter(getActivity(), mEventShow);
+                    mRecyclerEvents.setAdapter(adapter);
+                }
+                break;
                 default:
                     break;
             }
@@ -102,4 +139,21 @@ public class DorMyDorFragment extends Fragment {
         }
     });
 
+
+    @OnClick({R.id.dor_my_pay_detail, R.id.dor_my_dor_text_event_more})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.dor_my_pay_detail: {
+
+            }break;
+            case R.id.dor_my_dor_text_event_more:{
+                Bundle bundle = new Bundle();
+                bundle.putString("type","dor");
+                Intent intent = new Intent(getActivity(),EventShowActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent,bundle);
+            }
+                break;
+        }
+    }
 }

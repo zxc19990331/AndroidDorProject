@@ -73,6 +73,7 @@
     <string name="home_meicha">没有哦</string>
     <string name="home_zhengzaicha">正在查房!</string>
     <string name="home_events">宿舍公告牌</string>
+    <string name="home_events_more">查看更多</string>
     <string name="home_ayisaying">阿姨的话</string>
 
     <!--fragment_my_info-->
@@ -103,7 +104,7 @@
     <string name="dor_my_pay_desc">上次查询时间：%s\n 上次查询结果 水费:%s 电费:%s</string>
     <string name="dor_my_event">事件</string>
     <string name="dormate_default_descr">学习如风，常伴我身</string>
-
+    <string name="dor_my_more">查看更多</string>
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
 
