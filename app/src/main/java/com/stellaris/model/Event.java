@@ -1,5 +1,9 @@
 package com.stellaris.model;
 
+import com.stellaris.constants.DBKeys;
+
+import java.util.HashMap;
+
 public class Event {
     private String id;
     private String type;
@@ -10,6 +14,17 @@ public class Event {
     private String note;
     private String userId;
 
+    public void init(HashMap<String,String> map){
+        setId(map.get(DBKeys.EVENT_ID));
+        setTitle(map.get(DBKeys.EVENT_TITLE));
+        setType(map.get(DBKeys.EVENT_TYPE));
+        setSchoolId(map.get(DBKeys.EVENT_SCH));
+        setBuiId(map.get(DBKeys.EVENT_BUI));
+        setRoomId(map.get(DBKeys.EVENT_ROOM));
+        setDate(map.get(DBKeys.EVENT_DATE));
+        setNote(map.get(DBKeys.EVENT_NOTE));
+        setUserId(map.get(DBKeys.EVENT_USR_ID));
+    }
     public String getTitle() {
         return title;
     }

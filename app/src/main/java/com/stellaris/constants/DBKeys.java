@@ -52,4 +52,8 @@ public interface DBKeys {
     String EVENT_NOTE = "note";
     String EVENT_USR_ID = "user_id";
 
+    String EVENT_TYPE_GOOD = "表扬";
+    String EVENT_TYPE_BAD = "批评";
+    String EVENT_TYPE_COMMON = "普通";
+
 }

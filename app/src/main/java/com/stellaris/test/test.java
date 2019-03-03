@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.stellaris.functions.TimeUtil;
 import com.stellaris.functions.DBUtils;
 import com.stellaris.functions.DBHandle;
+import com.stellaris.manager.UsrManager;
 
 public class test {
     private static String ip = "118.25.54.117";
@@ -16,8 +17,9 @@ public class test {
     private static String passworld = "123456";
 
     public static void main(String[] args) throws Exception {
-
-        System.out.print(DBHandle.getStuInfoByIdAndSch("19170122","01"));
+        String str = "[\"1\",2\",3,4]]]";
+        System.out.print(str.replaceAll("[\\[\\]\"]",""));
+        //System.out.print(DBHandle.getEventsByBuiAndSch("05", "1", 2));
     }
 
     public static Connection getconnection()

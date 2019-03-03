@@ -38,7 +38,7 @@ public class AddEventActivity extends AppCompatActivity {
     private String[] mTypes;
     private int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
 
-    @BindView(R.id.evene_title)
+    @BindView(R.id.event_title)
     AutoCompleteTextView mEditTitle;
 
     @BindView(R.id.event_note)

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBg"
     tools:context=".EventShowActivity">
 
     <com.qmuiteam.qmui.widget.QMUITopBarLayout
@@ -11,11 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/RecycleView"
+    <com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout
+        android:id="@+id/pull_to_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/qmui_topbar_height"/>
-
+        android:layout_marginTop="?attr/qmui_topbar_height">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/RecycleView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+           />
+    </com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout>
 </android.support.constraint.ConstraintLayout>

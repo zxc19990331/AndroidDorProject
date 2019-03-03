@@ -130,6 +130,40 @@ public class DBHandle {
         return getUserList(sql);
     }
 
+    //这里可以重构成Event Post什么都继承DBObject类 getList就可以只写一个基类了
+    //但再重构我就要暴毙了
+    public static List<Event> getEventsByBuiAndSch(String bui_id,String sch_id,int limit){
+        String sql = String.format("SELECT * FROM events WHERE %s = '%s' AND %s = '%s' ORDER BY date DESC LIMIT %s",DBKeys.EVENT_BUI,bui_id,DBKeys.EVENT_SCH,sch_id,String.valueOf(limit));
+        return getEventList(sql);
+    }
+
+    private static List<Event> getEventList(String sql){
+        List<Event> events = new ArrayList<>();
+        Connection conn = DBUtils.getConnection();
+        try {
+            Statement st = conn.createStatement();
+            ResultSet res = st.executeQuery(sql);
+            while (res.next()) {
+                Event event = new Event();
+                HashMap<String,String> map = new HashMap<>();
+                int cnt = res.getMetaData().getColumnCount();
+                for (int i = 1; i <= cnt; ++i) {
+                    String field = res.getMetaData().getColumnName(i);
+                    map.put(field, res.getString(field));
+                }
+                event.init(map);
+                events.add(event);
+            }
+            res.close();
+            conn.close();
+            return events;
+        }catch (Exception e) {
+            e.printStackTrace();
+            Log.d("DBHANDLE", " 获取Event列表失败");
+            return null;
+        }
+    }
+
     public static List<User> getUsersByDor(String sch_id,String bui_id,String dor_id){
         String sql = String.format("SELECT * FROM users WHERE %s = '%s' AND %s = '%s' AND %s = '%s'",DBKeys.USR_COL_ID,sch_id,DBKeys.USR_DOR_BUI_ID,bui_id,DBKeys.USR_DOR_ROOM_SHORT,dor_id);
         return getUserList(sql);

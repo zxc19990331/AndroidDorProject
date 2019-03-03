@@ -2,14 +2,24 @@ package com.stellaris.practice;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
+import com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout;
+import com.stellaris.adapter.EventAdapter;
 import com.stellaris.constants.DBKeys;
+import com.stellaris.constants.MsgStatus;
+import com.stellaris.functions.DBHandle;
 import com.stellaris.manager.UsrManager;
+import com.stellaris.model.Event;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,8 +32,12 @@ public class EventShowActivity extends AppCompatActivity {
     @BindView(R.id.RecycleView)
     RecyclerView mRecycleView;
 
-    private String TAG = "宿舍公告板";
+    @BindView(R.id.pull_to_refresh)
+    QMUIPullRefreshLayout mPullRefreshLayout;
+
+    private String TAG = "宿舍事件";
     private int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
+    List<Event> mEventShow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +45,35 @@ public class EventShowActivity extends AppCompatActivity {
         setContentView(R.layout.activity_event_show);
         ButterKnife.bind(this);
         initTopbar();
-        initData();
+        initView();
+        setEvents();
+    }
+
+    private void initRefresh() {
+        //设置下拉刷新
+        mPullRefreshLayout.setOnPullListener(new QMUIPullRefreshLayout.OnPullListener() {
+            @Override
+            public void onMoveTarget(int offset) {
+
+            }
+
+            @Override
+            public void onMoveRefreshView(int offset) {
+
+            }
+
+            @Override
+            public void onRefresh() {
+                mPullRefreshLayout.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        setEvents();
+                        mPullRefreshLayout.finishRefresh();
+                    }
+                }, 1000);
+            }
+        });
+
     }
 
     private void initTopbar() {
@@ -41,14 +83,16 @@ public class EventShowActivity extends AppCompatActivity {
                 finish();
             }
         });
-        if(UsrManager.getIdentity().equals(DBKeys.USR_IDENT_AYI)){
-            mTopbar.addRightTextButton("管理",R.layout.button_empty).setOnClickListener(new View.OnClickListener(){
+        //如果是阿姨就添加管理按钮
+        if (UsrManager.getIdentity().equals(DBKeys.USR_IDENT_AYI)) {
+            mTopbar.addRightTextButton("管理", R.layout.button_empty).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     showBottomSheet();
                 }
             });
         }
+        mTopbar.setTitle(TAG);
     }
 
     private void showBottomSheet() {
@@ -68,8 +112,41 @@ public class EventShowActivity extends AppCompatActivity {
                 })
                 .build().show();
     }
-    private void initData() {
 
+    private void setEvents() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //载入AYI身份的postings
+                mEventShow = DBHandle.getEventsByBuiAndSch(UsrManager.getDorBuildingId(), UsrManager.getCollegeId(), 20);
+                Message msg = new Message();
+                msg.what = MsgStatus.EVENT_GOT;
+                msg.obj = mEventShow;
+                handler.sendMessage(msg);
+            }
+        }).start();
+    }
+
+    Handler handler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            switch (msg.what) {
+                case MsgStatus.EVENT_GOT: {
+                    EventAdapter adapter = new EventAdapter(EventShowActivity.this, mEventShow);
+                    mRecycleView.setAdapter(adapter);
+                }
+                break;
+                default:
+                    break;
+            }
+            return false;
+        }
+    });
+
+    private void initView() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(EventShowActivity.this);
+        linearLayoutManager.setAutoMeasureEnabled(true);
+        mRecycleView.setLayoutManager(linearLayoutManager);
     }
 
 }
