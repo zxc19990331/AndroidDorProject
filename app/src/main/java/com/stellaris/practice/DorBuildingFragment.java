@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout;
 import com.stellaris.adapter.PostingAdapter;
@@ -44,6 +45,9 @@ public class DorBuildingFragment extends Fragment {
     @BindView(R.id.appbar)
     AppBarLayout mAppBar;
 
+    @BindView(R.id.dor_bui_layout_find_area)
+    LinearLayout mLayoutFind;
+
     private List<Posting> mPosts;
 
     @Override
@@ -72,12 +76,21 @@ public class DorBuildingFragment extends Fragment {
     }
 
 
-    @OnClick(R.id.dor_bui_image_add)
-    public void onViewClicked() {
+    @OnClick({R.id.dor_bui_image_add,R.id.dor_bui_layout_find_area})
+    public void onViewClicked(View view) {
         //View itemPostView = View.inflate(getContext(),R.layout.item_posting,null);
         //LayoutAllposts.addView(itemPostView);
-        Intent intent = new Intent(getActivity(), AddPostActivity.class);
-        startActivity(intent);
+        switch (view.getId()){
+            case R.id.dor_bui_image_add:{
+                Intent intent = new Intent(getActivity(), AddPostActivity.class);
+                startActivity(intent);
+            }break;
+            case R.id.dor_bui_layout_find_area:{
+                Intent intent = new Intent(getActivity(), FindStuActivity.class);
+                startActivity(intent);
+            }break;
+        }
+
     }
 
     Handler handler = new Handler(new Handler.Callback() {
@@ -140,7 +153,7 @@ public class DorBuildingFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                mPosts = DBHandle.getPostingBySchoolAndBui(UsrManager.getCollegeId(), UsrManager.getDorBuildingId(),true, DBKeys.POST_TYPE_STU);
+                mPosts = DBHandle.getPostingBySchoolAndBui(UsrManager.getCollegeId(), UsrManager.getDorBuildingId(), true, DBKeys.POST_TYPE_STU);
                 Message msg = new Message();
                 msg.what = MsgStatus.POST_GOT;
                 msg.obj = mPosts;
@@ -149,7 +162,5 @@ public class DorBuildingFragment extends Fragment {
         }).start();
 
     }
-
-
 }
 

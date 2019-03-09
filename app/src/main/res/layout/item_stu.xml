@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
+
+
+        <TextView
+            android:id="@+id/item_stu_dor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/text_tag"
+            android:text="308"
+            android:textColor="@color/qmui_config_color_gray_5"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/item_stu_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="2dp"
+            android:layout_weight="1"
+            android:background="@drawable/text_tag"
+            android:text="王小E"
+            android:textColor="@color/qmui_config_color_gray_5"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/item_stu_stuId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="2dp"
+            android:layout_weight="1"
+            android:background="@drawable/text_tag"
+            android:text="19170100"
+            android:textColor="@color/qmui_config_color_gray_5"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/item_stu_major"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="2dp"
+            android:layout_weight="1"
+            android:background="@drawable/text_tag"
+            android:text="力量与摔跤"
+            android:textColor="@color/qmui_config_color_gray_5"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

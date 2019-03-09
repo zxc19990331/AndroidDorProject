@@ -36,7 +36,8 @@
         <activity android:name=".WebDetailActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".AddEventActivity" />
-        <activity android:name=".EventShowActivity"></activity>
+        <activity android:name=".EventShowActivity" />
+        <activity android:name=".FindStuActivity"></activity>
     </application>
 
 </manifest>

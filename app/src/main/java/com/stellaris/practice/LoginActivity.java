@@ -68,9 +68,9 @@ public class LoginActivity extends AppCompatActivity {
     @OnFocusChange(R.id.login_edit_password)
     public void onFocusChange(View v, boolean hasFocus){
         if(hasFocus)
-            imageTitle.setImageDrawable(getResources().getDrawable(R.drawable.login_banana_1));
+            imageTitle.setImageDrawable(getResources().getDrawable(R.drawable.image_e_1));
         else
-            imageTitle.setImageDrawable(getResources().getDrawable(R.drawable.login_banana_0));
+            imageTitle.setImageDrawable(getResources().getDrawable(R.drawable.image_e_0));
     }
 
     Handler handler = new Handler(new Handler.Callback() {

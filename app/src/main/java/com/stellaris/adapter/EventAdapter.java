@@ -31,6 +31,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         public TextView text_dors;
         public TextView text_tag;
         public ImageView image;
+        public String eventId;
         public EventViewHolder(View itemView){
             super(itemView);
             text_title = (TextView)itemView.findViewById(R.id.item_event_title);
@@ -60,6 +61,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         eventholder.text_date.setText(event.getDate().substring(0,19));
         eventholder.text_tag.setText(event.getType());
         eventholder.text_note.setText(event.getNote());
+        eventholder.eventId = event.getId();
         String type = event.getType();
         switch (type){
             case DBKeys.EVENT_TYPE_GOOD:

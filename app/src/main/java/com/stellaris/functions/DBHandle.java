@@ -124,9 +124,15 @@ public class DBHandle {
     }
 
 
+
     //通过dor_id获得用户列表
     public static List<User> getUsersByDor(String dor_id){
         String sql = String.format("SELECT * FROM users WHERE %s = '%s'",DBKeys.USR_DOR_ROOM_ID,dor_id);
+        return getUserList(sql);
+    }
+
+    public static List<User> getStusByBui(String bui_id){
+        String sql = String.format("SELECT * FROM stus WHERE %s = '%s' ORDER BY %s ASC",DBKeys.USR_DOR_BUI_ID,bui_id,DBKeys.USR_DOR_ROOM_SHORT);
         return getUserList(sql);
     }
 

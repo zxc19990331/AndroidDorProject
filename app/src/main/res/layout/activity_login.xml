@@ -40,11 +40,11 @@
 
             <ImageView
                 android:id="@+id/login_image_title"
-                android:layout_width="194dp"
-                android:layout_height="187dp"
+                android:layout_width="169dp"
+                android:layout_height="148dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/login_banana_0" />
+                app:srcCompat="@drawable/image_e_0" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
