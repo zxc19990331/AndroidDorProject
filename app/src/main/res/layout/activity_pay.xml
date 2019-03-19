@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".PayActivity">
+
+    <com.qmuiteam.qmui.widget.QMUITopBarLayout
+        android:id="@+id/pay_topbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/pay_dor_title"
+            style="@style/StCommonTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0dp"
+            android:text="@string/pay_dor" />
+
+        <TextView
+            android:id="@+id/pay_dor_hint"
+            style="@style/StDateItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pay_default_hint" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp">
+
+            <TextView
+                android:id="@+id/pay_dor_power_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pay_power"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/item_event_tag"
+                style="@style/StCommonTag"
+                android:text="@string/pay_card_bind"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="10dp"/>
+        </LinearLayout>
+
+        <GridView
+            android:id="@+id/pay_grid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:numColumns="3"
+            android:verticalSpacing="10dp"
+            android:horizontalSpacing="10dp"
+            android:layout_marginTop="10dp"
+            tools:listitem="@layout/item_simple_border" />
+
+    </LinearLayout>
+
+
+
+
+
+
+
+</LinearLayout>

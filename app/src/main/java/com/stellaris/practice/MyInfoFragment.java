@@ -112,6 +112,10 @@ public class MyInfoFragment extends Fragment {
                         Intent intent = new Intent(getActivity(), DetailInfoActivity.class);
                         startActivity(intent);
                     }break;
+                    case 1:{
+                        Intent intent = new Intent(getActivity(), PayActivity.class);
+                        startActivity(intent);
+                    }break;
                     case 2:{
                         //跳转到到相应学校教务系统官网
                         String url = "";

@@ -37,7 +37,8 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".AddEventActivity" />
         <activity android:name=".EventShowActivity" />
-        <activity android:name=".FindStuActivity"></activity>
+        <activity android:name=".FindStuActivity" />
+        <activity android:name=".PayActivity"></activity>
     </application>
 
 </manifest>

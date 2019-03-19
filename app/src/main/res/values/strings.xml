@@ -27,6 +27,11 @@
 
     <string name="navigation_bottom_height">56dp</string>
 
+    <!--pay-->
+    <string name="pay_dor">05栋/308室</string>
+    <string name="pay_power">充电费</string>
+    <string name="pay_default_hint">默认宿舍</string>
+    <string name="pay_card_bind">校园卡认证</string>
     <!--register and login-->
     <string name="input_logname">手机号/用户名/邮箱</string>
     <string name="input_password">请输入密码</string>

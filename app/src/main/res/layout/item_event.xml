@@ -36,20 +36,12 @@
                 android:textStyle="bold"
                 android:gravity="center_vertical"
                 android:layout_marginStart="4dp"/>
+
             <TextView
                 android:id="@+id/item_event_tag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:text="表扬"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingTop="2dp"
-                android:paddingBottom="2dp"
-                android:textColor="@color/colorWhite"
-                android:layout_gravity="center_vertical"
-                android:background="@color/app_color_blue"
-                android:layout_marginStart="4dp"/>
+                android:text="@string/event_default_tag"
+                style="@style/StCommonTag"
+                android:layout_marginStart="5dp"/>
 
             <TextView
                 android:id="@+id/item_event_date"
