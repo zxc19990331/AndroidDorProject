@@ -17,8 +17,7 @@ public class test {
     private static String passworld = "123456";
 
     public static void main(String[] args) throws Exception {
-        String str = "[\"1\",2\",3,4]]]";
-        System.out.print(str.replaceAll("[\\[\\]\"]",""));
+        System.out.print((int)(double)10/-6+""+10%(-6));
         //System.out.print(DBHandle.getEventsByBuiAndSch("05", "1", 2));
     }
 

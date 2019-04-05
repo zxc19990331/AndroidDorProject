@@ -16,7 +16,6 @@
             android:background="@color/colorBg"
             android:fillViewport="true">
 
-            <!-- TODO: 主页：完善UI后数据接口 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

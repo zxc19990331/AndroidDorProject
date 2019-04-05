@@ -26,6 +26,12 @@ android {
     }
     productFlavors {
     }
+    sourceSets{
+        main{
+            jniLibs.srcDir 'libs'
+            //说明so的路径为该libs路径，关联所有地图SDK的so文件
+        }
+    }
 }
 
 dependencies {
@@ -47,5 +53,7 @@ dependencies {
     implementation 'com.lucasurbas:listitemview:1.1.1'
     implementation 'de.hdodenhof:circleimageview:3.0.0'
     implementation 'com.qmuiteam:qmui:1.1.11'
-
+    implementation files('libs/BaiduLBS_Android.jar')
+    implementation 'com.github.hotchemi:permissionsdispatcher:2.2.0'
+    annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.2.0'
 }

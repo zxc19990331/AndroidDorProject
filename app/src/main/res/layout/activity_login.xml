@@ -15,7 +15,6 @@
 
     <!-- Login progress -->
 
-    <!--TODO:把香蕉君换成小E-->
 
     <ProgressBar
         android:id="@+id/login_progress"

@@ -99,6 +99,10 @@ public class AddEventActivity extends AppCompatActivity {
         String dors = mEditDors.getText().toString();
         String bui = UsrManager.getDorBuildingId();
         String note = mEditNote.getText().toString();
+        if(title.isEmpty()||type.isEmpty()){
+            Toast.makeText(AddEventActivity.this,"必要信息不得输入为空!",Toast.LENGTH_SHORT).show();
+            return;
+        }
         Event event = new Event();
         event.setBuiId(bui);
         event.setDate(strDate);

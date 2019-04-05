@@ -29,4 +29,6 @@ public interface MsgStatus {
     int EVENT_GOT = 0x3;
 
     int STU_FIND_GOT = 0x9;
+    int POST_DEL_SUCCESS = 0xa;
+    int POST_DEL_FAIL = 0xb;
 }

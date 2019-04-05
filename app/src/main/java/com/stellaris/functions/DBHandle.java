@@ -22,6 +22,8 @@ import java.util.List;
 * 日后有可能（没多大可能）换成web中转HTTP连接
 * 这样只需要修改DBHandle的方法
 * Activity中的调用方法名就不需要改动
+*
+* 过了二三十天发现裸连数据库真的是太睿智了……
 * */
 
 public class DBHandle {
@@ -71,6 +73,8 @@ public class DBHandle {
     }
 
     //有很多方法非常冗余，但这是寒假刚设计数据库时的我的锅，不是现在正在写bug的我的锅
+    //开学学了一节课的SQL就发现当初数据库设计的太sb了
+    //对不起，是我太弱了
     //通过宿舍长ID获得宿舍信息
     public static HashMap<String,String> getDorInfo(String dor_id){
         String sql = "SELECT * FROM dor_room WHERE id = '" + dor_id + "'";
@@ -281,5 +285,10 @@ public class DBHandle {
         return executeInsertSql(sql);
     }
 
+    public static boolean delEvent(String eventId){
+        String sql = String.format("DELETE FROM events WHERE %s = '%s'",DBKeys.POST_ID,eventId);
+        Log.d("DEL",sql);
+        return executeInsertSql(sql);
+    }
 
 }
