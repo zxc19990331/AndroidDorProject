@@ -99,7 +99,7 @@ public class DBHandle {
     }
     //通过id获得user信息
     public static HashMap<String, String> getDetailById(String id){
-        String sql = "SELECT name,stu_id,college_id,dor_building_id,dor_room_short_id,major,sex FROM users WHERE id = '"+ id + "'";
+        String sql = "SELECT name,stu_id,college_id,dor_building_id,dor_room_short_id,major,sex,descr FROM users WHERE id = '"+ id + "'";
         return executeSqlQuery(sql);
     }
 
@@ -286,8 +286,24 @@ public class DBHandle {
     }
 
     public static boolean delEvent(String eventId){
-        String sql = String.format("DELETE FROM events WHERE %s = '%s'",DBKeys.POST_ID,eventId);
+        String sql = String.format("DELETE FROM events WHERE %s = '%s'",DBKeys.EVENT_ID,eventId);
         Log.d("DEL",sql);
+        return executeInsertSql(sql);
+    }
+
+    public static boolean delPosting(String postId){
+        String sql = String.format("DELETE FROM postings WHERE %s = '%s'",DBKeys.POST_ID,postId);
+        Log.d("DEL",sql);
+        return executeInsertSql(sql);
+    }
+    public static boolean UpdatePay(String dorId,double num,int type){
+        String sql = String.format("UPDATE dor_room SET %s = %s + %s ,%s = NOW() WHERE %s = '%s'",type==0x0?DBKeys.ROOM_POWER:DBKeys.ROOM_WATER,type==0x0?DBKeys.ROOM_POWER:DBKeys.ROOM_WATER,String.valueOf(num),DBKeys.ROOM_LAST_REQ_DATE,DBKeys.ROOM_ID,dorId);
+        Log.d("PAY",sql);
+        return executeInsertSql(sql);
+    }
+
+    public static boolean UpdateDescr(String userId,String descr){
+        String sql = String.format("UPDATE users SET %s = '%s' WHERE %s = '%s'",DBKeys.USR_DESR,descr,DBKeys.USR_ID,userId);
         return executeInsertSql(sql);
     }
 

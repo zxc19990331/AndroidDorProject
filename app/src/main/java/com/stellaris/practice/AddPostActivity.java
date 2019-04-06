@@ -109,6 +109,7 @@ public class AddPostActivity extends AppCompatActivity {
                     Toast.makeText(AddPostActivity.this,"发送成功！",Toast.LENGTH_SHORT).show();
                     //清空草稿区
                     saveDraft(false);
+                    setResult(MsgStatus.INTENT_NEW_CONTENT);
                     finish();
                 }break;
                 case MsgStatus.POST_FAIL:{

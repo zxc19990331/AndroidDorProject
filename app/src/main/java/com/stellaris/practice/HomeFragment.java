@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,7 +35,9 @@ import butterknife.OnClick;
 public class HomeFragment extends Fragment {
 
 
-    //TODO: 增加百度地图API为基础的查房打卡系统
+    @BindView(R.id.appbar)
+    AppBarLayout mAppBar;
+
     @BindView(R.id.home_chalema_detail)
     TextView mChalemaDetail;
 
@@ -84,6 +87,7 @@ public class HomeFragment extends Fragment {
         mAyiPosts.setNestedScrollingEnabled(false);
         mEvents.setLayoutManager(linearLayoutManager2);
         mEvents.setNestedScrollingEnabled(false);
+        mEvents.setHasFixedSize(true);
     }
 
     private void initRefresh() {
@@ -112,6 +116,17 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        mAppBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+
+                if (verticalOffset >= 0) {
+                    mPullRefreshLayout.setEnabled(true);
+                } else {
+                    mPullRefreshLayout.setEnabled(false);
+                }
+            }
+        });
     }
 
     private void setPostings() {
@@ -147,7 +162,7 @@ public class HomeFragment extends Fragment {
         public boolean handleMessage(Message msg) {
             switch (msg.what) {
                 case MsgStatus.POST_GOT: {
-                    PostingAdapter adapter = new PostingAdapter(mPosts);
+                    PostingAdapter adapter = new PostingAdapter(mPosts,getActivity());
                     mAyiPosts.setAdapter(adapter);
                 }
                 break;
@@ -174,14 +189,14 @@ public class HomeFragment extends Fragment {
                 bundle.putString("type", "all");
                 Intent intent = new Intent(getActivity(), EventShowActivity.class);
                 intent.putExtras(bundle);
-                startActivity(intent, bundle);
+                startActivityForResult(intent, MsgStatus.INTENT_SEND,bundle);
             }
             break;
             case R.id.home_title_ayisaying:
                 break;
             case R.id.dor_bui_image_add:{
                 Intent intent = new Intent(getActivity(),AddPostActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,MsgStatus.INTENT_SEND);
             }break;
             case R.id.home_layout_chalema:{
                 Intent intent = new Intent(getActivity(),MapActivity.class);
@@ -194,4 +209,14 @@ public class HomeFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==MsgStatus.INTENT_SEND&&resultCode==MsgStatus.INTENT_NEW_CONTENT){
+            setPostings();
+            setEvents();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
 }

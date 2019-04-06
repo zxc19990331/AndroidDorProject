@@ -30,8 +30,10 @@
     <!--pay-->
     <string name="pay_dor">05栋/308室</string>
     <string name="pay_power">充电费</string>
+    <string name="pay_water">充水费</string>
     <string name="pay_default_hint">默认宿舍</string>
     <string name="pay_card_bind">校园卡认证</string>
+    <string name="pay_notes">节约用水 人人有责</string>
     <!--register and login-->
     <string name="input_logname">手机号/用户名/邮箱</string>
     <string name="input_password">请输入密码</string>
@@ -106,7 +108,7 @@
     <!--fragment_dor_my_dor-->
     <string name="dor_my_mates">我的舍友</string>
     <string name="dor_my_pay">水电费查询</string>
-    <string name="dor_my_pay_desc">上次查询时间：%s\n 上次查询结果 水费:%s 电费:%s</string>
+    <string name="dor_my_pay_desc">上次充值时间：%s\n 查询结果 水费:%s 电费:%s</string>
     <string name="dor_my_event">事件</string>
     <string name="dormate_default_descr">学习如风，常伴我身</string>
     <string name="dor_my_more">查看更多</string>

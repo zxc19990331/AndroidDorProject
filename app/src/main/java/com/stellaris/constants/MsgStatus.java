@@ -31,4 +31,15 @@ public interface MsgStatus {
     int STU_FIND_GOT = 0x9;
     int POST_DEL_SUCCESS = 0xa;
     int POST_DEL_FAIL = 0xb;
+    int POST_GET_USR_INFO = 0xc;
+
+    int PAY_UPDATE_SUCCESS = 0xc;
+    int PAY_UPDATE_FAIL = 0xd;
+    int MSG_FINISH = 0xf;
+
+    int INTENT_SEND = 0x0;
+    int INTENT_NEW_CONTENT = 0x1;
+    int INTENT_NO_NEW_CONTENT = 0x2;
+
+    int INFO_DESCR_CHANGE = 0x10;
 }

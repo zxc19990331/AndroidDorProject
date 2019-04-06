@@ -68,11 +68,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         public boolean handleMessage(Message message) {
             switch (message.what){
                 case MsgStatus.POST_DEL_SUCCESS:
-                    Log.d("EventAdapter",String.valueOf(getItemCount()));
-                    Log.d("EventAdapter",mEvents.toString());
                     mEvents.remove((int)message.obj);
-                    Log.d("EventAdapter",String.valueOf(getItemCount()));
-                    Log.d("EventAdapter",mEvents.toString());
                     Toast.makeText(context,"事件删除成功",Toast.LENGTH_SHORT).show();
                     break;
                 case MsgStatus.POST_DEL_FAIL:

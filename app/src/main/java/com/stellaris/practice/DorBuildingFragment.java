@@ -98,7 +98,7 @@ public class DorBuildingFragment extends Fragment {
         public boolean handleMessage(Message msg) {
             switch (msg.what) {
                 case MsgStatus.POST_GOT: {
-                    PostingAdapter adapter = new PostingAdapter(mPosts);
+                    PostingAdapter adapter = new PostingAdapter(mPosts,getActivity());
                     mRecyclePosts.setAdapter(adapter);
                 }
                 break;
@@ -147,6 +147,7 @@ public class DorBuildingFragment extends Fragment {
                 }
             }
         });
+
     }
 
     private void setPostings() {
@@ -161,6 +162,14 @@ public class DorBuildingFragment extends Fragment {
             }
         }).start();
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==MsgStatus.INTENT_SEND&&resultCode==MsgStatus.INTENT_NEW_CONTENT){
+            setPostings();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
 

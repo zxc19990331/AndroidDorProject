@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout;
 import com.stellaris.adapter.DormateAdapter;
 import com.stellaris.adapter.EventAdapter;
 import com.stellaris.constants.DBKeys;
@@ -40,7 +41,38 @@ public class DorMyDorFragment extends Fragment {
     @BindView(R.id.dor_my_dor_text_event_more)
     TextView dorMyDorTextEventMore;
 
+    @BindView(R.id.pull_to_refresh)
+    QMUIPullRefreshLayout mPullRefreshLayout;
+
     private List<Event> mEventShow = new ArrayList<>();
+
+    private void initRefresh() {
+        //设置下拉刷新
+        mPullRefreshLayout.setOnPullListener(new QMUIPullRefreshLayout.OnPullListener() {
+            @Override
+            public void onMoveTarget(int offset) {
+
+            }
+
+            @Override
+            public void onMoveRefreshView(int offset) {
+
+            }
+
+            @Override
+            public void onRefresh() {
+                mPullRefreshLayout.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        setMatesData();
+                        setPayment();
+                        setEvents();
+                        mPullRefreshLayout.finishRefresh();
+                    }
+                }, 1000);
+            }
+        });
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,6 +99,7 @@ public class DorMyDorFragment extends Fragment {
         setMatesData();
         setPayment();
         setEvents();
+        initRefresh();
         return rootView;
 
     }
@@ -144,16 +177,27 @@ public class DorMyDorFragment extends Fragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.dor_my_pay_detail: {
-
+                Intent intent = new Intent(getActivity(),PayActivity.class);
+                startActivityForResult(intent,MsgStatus.INTENT_SEND);
             }break;
             case R.id.dor_my_dor_text_event_more:{
                 Bundle bundle = new Bundle();
+                //筛选是宿舍相关
                 bundle.putString("type","dor");
                 Intent intent = new Intent(getActivity(),EventShowActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent,bundle);
-            }
-                break;
+            }break;
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==MsgStatus.INTENT_SEND&&resultCode==MsgStatus.INTENT_NEW_CONTENT){
+            setMatesData();
+            setEvents();
+            setPayment();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

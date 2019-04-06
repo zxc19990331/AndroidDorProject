@@ -10,116 +10,126 @@
         android:id="@+id/pull_to_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <android.support.v4.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorBg"
-            android:fillViewport="true">
-
-            <LinearLayout
+            <android.support.design.widget.CoordinatorLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
-
-                <LinearLayout
-                    android:id="@+id/home_layout_chalema"
-                    style="@style/StTitleBG"
+                <android.support.design.widget.AppBarLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/home_title_chalema"
-                        style="@style/StCommonRowTitle"
+                    android:background="@color/colorBg"
+                    android:id="@+id/appbar"
+                    app:elevation="0dp">
+                    <LinearLayout
+                        android:id="@+id/home_layout_chalema"
+                        style="@style/StTitleBG"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:text="@string/home_cha_le_ma" />
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+                        app:layout_scrollFlags="scroll">
 
-                    <!--竖分割线-->
-                    <View
-                        android:id="@+id/view_div"
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical"
-                        android:background="@color/qmui_config_color_gray_6" />
-
-                    <TextView
-                        android:id="@+id/home_chalema_detail"
-                        style="@style/StDateItem"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="10dp"
-                        android:layout_weight="1"
-                        android:text="@string/home_chalema_default" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/home_layout_events"
-                    style="@style/StTitleBG"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                        <RelativeLayout
+                        <TextView
+                            android:id="@+id/home_title_chalema"
+                            style="@style/StCommonRowTitle"
                             android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:text="@string/home_cha_le_ma" />
+
+                        <!--竖分割线-->
+                        <View
+                            android:id="@+id/view_div"
+                            android:layout_width="1dp"
                             android:layout_height="match_parent"
-                            android:orientation="horizontal">
-                            <TextView
-                                android:id="@+id/home_title_events"
-                                style="@style/StCommonTitle"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/home_events" />
-                            <TextView
-                                android:id="@+id/home_title_events_more"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                style="@style/StDateItem"
-                                android:layout_alignParentEnd="true"
-                                android:layout_centerVertical="true"
-                                android:text="@string/home_events_more" />
-                        </RelativeLayout>
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/qmui_config_color_gray_6" />
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/home_recycle_events"
+                        <TextView
+                            android:id="@+id/home_chalema_detail"
+                            style="@style/StDateItem"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            android:text="@string/home_chalema_default" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/home_layout_events"
+                        style="@style/StTitleBG"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="0dp" />
-                </LinearLayout>
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_scrollFlags="scroll">
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:id="@+id/home_title_events"
+                                    style="@style/StCommonTitle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/home_events" />
+                                <TextView
+                                    android:id="@+id/home_title_events_more"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    style="@style/StDateItem"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:text="@string/home_events_more" />
+                            </RelativeLayout>
 
-                <RelativeLayout
-                    android:id="@+id/home_layout_ayisaying"
-                    style="@style/StTitleBG"
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/home_recycle_events"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="0dp" />
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/home_layout_ayisaying"
+                        style="@style/StTitleBG"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/home_title_ayisaying"
+                            style="@style/StCommonTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="@string/home_ayisaying" />
+                        <!--加号button-->
+                        <ImageView
+                            android:id="@+id/dor_bui_image_add"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentEnd="true"
+                            app:srcCompat="@drawable/ic_add_circle_outline_black_24dp" />
+
+                    </RelativeLayout>
+                </android.support.design.widget.AppBarLayout>
+
+                <android.support.v4.widget.NestedScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:id="@+id/home_title_ayisaying"
-                        style="@style/StCommonTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="@string/home_ayisaying" />
-                    <!--加号button-->
-                    <ImageView
-                        android:id="@+id/dor_bui_image_add"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentEnd="true"
-                        app:srcCompat="@drawable/ic_add_circle_outline_black_24dp" />
-
-                </RelativeLayout>
-
+                    android:layout_height="match_parent"
+                    android:background="@color/colorBg"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    android:fillViewport="true">
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/home_ayi_posts"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="80dp"/>
 
-            </LinearLayout>
-       </android.support.v4.widget.NestedScrollView>
+
+                </android.support.v4.widget.NestedScrollView>
+            </android.support.design.widget.CoordinatorLayout>
     </com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout>
 </FrameLayout>

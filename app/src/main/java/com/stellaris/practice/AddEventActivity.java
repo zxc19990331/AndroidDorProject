@@ -132,6 +132,7 @@ public class AddEventActivity extends AppCompatActivity {
             switch (message.what){
                 case MsgStatus.EVENT_SEND_SUCCESS:
                     Toast.makeText(AddEventActivity.this,"事件发布成功!",Toast.LENGTH_SHORT).show();
+                    setResult(MsgStatus.INTENT_NEW_CONTENT);
                     finish();
                     break;
                 case MsgStatus.EVENT_SEND_FAIL:

@@ -130,7 +130,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 //没有用户绑定该学号
                                 if(mp3==null){
                                     //这里是mp2，可恶，乱命名毁一生
-                                    String info = String.format("学校：%s 学号：%s 姓名：%s 性别：%s 专业：%s 宿舍楼：%s 宿舍：%s",
+                                    String info = String.format("学校：%s \n学号：%s \n姓名：%s \n性别：%s \n专业：%s \n宿舍楼：%s \n宿舍：%s",
                                             mp2.get(DBKeys.USR_COL_ID),mp2.get(DBKeys.USR_STU_ID),mp2.get(DBKeys.USR_NAME),mp2.get(DBKeys.USR_SEX),mp2.get(DBKeys.USR_MAJ),
                                             mp2.get(DBKeys.USR_DOR_BUI_ID),mp2.get(DBKeys.USR_DOR_ROOM_SHORT));
                                     //Dialog跟Toast类似都需要加入loop(这样会导致主UI线程锁住 一般放入handler但我觉得没必要)

@@ -64,7 +64,39 @@
             android:verticalSpacing="10dp"
             android:horizontalSpacing="10dp"
             android:layout_marginTop="10dp"
-            tools:listitem="@layout/item_simple_border" />
+            tools:listitem="@layout/item_simple_border"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp">
+
+            <TextView
+                android:id="@+id/pay_dor_water_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pay_water"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/item_event_tag_2"
+                style="@style/StCommonTag"
+                android:text="@string/pay_notes"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="10dp"/>
+        </LinearLayout>
+
+        <GridView
+            android:id="@+id/pay_grid_water"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:numColumns="3"
+            android:verticalSpacing="10dp"
+            android:horizontalSpacing="10dp"
+            android:layout_marginTop="10dp"
+            tools:listitem="@layout/item_simple_border"/>
 
     </LinearLayout>
 

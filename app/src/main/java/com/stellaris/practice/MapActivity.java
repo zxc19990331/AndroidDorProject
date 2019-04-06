@@ -301,7 +301,7 @@ public class MapActivity extends BaseMapActivity implements SensorEventListener,
                 commit_bt.setBackgroundDrawable(getResources().getDrawable(R.mipmap.restaurant_btbg_gray));
                 mBaiduMap.setMyLocationEnabled(true);
             }
-            mDistance_tv.setText("距离目的地：" + mDistance + "米");
+            mDistance_tv.setText("距离目的地：" + (int)mDistance + "米");
             //缩放地图
             setMapZoomScale(LocationPoint);
         }
