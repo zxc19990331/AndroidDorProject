@@ -261,6 +261,49 @@ public class DBHandle {
         return executeInsertSql(sql);
     }
 
+    public static List<Posting> getCommentsByPostId(String postId){
+        String sql = "SELECT id,DATE_FORMAT(date,'%Y-%m-%d %T')date,user_id,user_name,content,dor_building_id,school_id,type FROM comments WHERE from_id = '"+postId+"'";
+        List<Posting> posts = new ArrayList<Posting>();
+        Connection conn = DBUtils.getConnection();
+        try {
+            Statement st = conn.createStatement();
+            ResultSet res = st.executeQuery(sql);
+            if (res == null) {
+                return null;
+            } else {
+                while(res.next()){
+                    //可以给Posting增加init方法
+                    Posting post = new Posting();
+                    post.setContent(res.getString(DBKeys.POST_CONTENT));
+                    post.setDate(res.getString(DBKeys.POST_DATE));
+                    post.setDorbuildingId(res.getString(DBKeys.POST_BUI_ID));
+                    post.setId(res.getString(DBKeys.POST_ID));
+                    post.setSchoolId(res.getString(DBKeys.POST_SCH_ID));
+                    post.setType(res.getString(DBKeys.POST_TYPE));
+                    post.setUserID(res.getString(DBKeys.POST_USR_ID));
+                    post.setUserName(res.getString(DBKeys.POST_USR_NAME));
+                    posts.add(post);
+                }
+
+                conn.close();
+                st.close();
+                res.close();
+                return posts;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d("DBHANDLE", " 获取comment列表失败");
+            return null;
+        }
+    }
+
+    public static boolean sendComments(Posting post,String toPost){
+        String sql = String.format("INSERT INTO comments (%s,%s,%s,%s,%s,%s,%s,%s,%s) VALUE('%s','%s','%s','%s','%s','%s','%s','%s','%s')",
+                DBKeys.POST_ID,DBKeys.POST_DATE,DBKeys.POST_USR_ID,DBKeys.POST_CONTENT,DBKeys.POST_BUI_ID,DBKeys.POST_SCH_ID,DBKeys.POST_TYPE,DBKeys.POST_USR_NAME,DBKeys.POST_FROM,
+                post.getId(),post.getDate(),post.getUserID(),post.getContent(),post.getDorbuildingId(),post.getSchoolId(),post.getType(),post.getUserName(),toPost);
+        Log.d("DBHANDLE",sql);
+        return executeInsertSql(sql);
+    }
     public static boolean sendEvent(Event event){
         event.setId(ShortUUID.generateShortUuid());
         String sql = String.format("INSERT INTO events (%s,%s,%s,%s,%s,%s,%s,%s,%s) VALUE ('%s','%s','%s','%s','%s','%s','%s','%s','%s')",

@@ -195,8 +195,11 @@ public class HomeFragment extends Fragment {
             case R.id.home_title_ayisaying:
                 break;
             case R.id.dor_bui_image_add:{
+                Bundle bundle =new Bundle();
+                bundle.putString("type","post");
                 Intent intent = new Intent(getActivity(),AddPostActivity.class);
-                startActivityForResult(intent,MsgStatus.INTENT_SEND);
+                intent.putExtras(bundle);
+                startActivityForResult(intent,MsgStatus.INTENT_SEND,bundle);
             }break;
             case R.id.home_layout_chalema:{
                 Intent intent = new Intent(getActivity(),MapActivity.class);

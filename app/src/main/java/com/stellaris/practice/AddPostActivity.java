@@ -41,8 +41,9 @@ public class AddPostActivity extends AppCompatActivity {
     QMUITopBarLayout mPostTopbar;
 
     //该activity的意图
-    Intent intent;
+    Bundle bundle;
 
+    private String mType;
     private String TAG = "说两句";
     private int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
 
@@ -51,6 +52,9 @@ public class AddPostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_post);
         ButterKnife.bind(this);
+        bundle = getIntent().getExtras();
+        mType = bundle.getString("type","post");//post or comment
+        Log.d(TAG,bundle.getString("postId","NoKey"));
         initTopBar();
         getDraft();
     }
@@ -124,14 +128,20 @@ public class AddPostActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                boolean res = DBHandle.sendPosting(post);
+                boolean res;
+                if (mType.equals("comment")) {
+                    String toPostId = bundle.getString("postId","");
+                    res = DBHandle.sendComments(post,toPostId);
+                } else {
+                    res = DBHandle.sendPosting(post);
+
+                }
                 Message msg = new Message();
-                if(res){
-                    msg.what = MsgStatus.POST_SUCCESS;
-                }
-                else {
-                    msg.what = MsgStatus.POST_FAIL;
-                }
+                    if (res) {
+                        msg.what = MsgStatus.POST_SUCCESS;
+                    } else {
+                        msg.what = MsgStatus.POST_FAIL;
+                    }
                 handler.sendMessage(msg);
             }
         }).start();

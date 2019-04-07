@@ -82,8 +82,11 @@ public class DorBuildingFragment extends Fragment {
         //LayoutAllposts.addView(itemPostView);
         switch (view.getId()){
             case R.id.dor_bui_image_add:{
+                Bundle bundle = new Bundle();
+                bundle.putString("type","post");
                 Intent intent = new Intent(getActivity(), AddPostActivity.class);
-                startActivity(intent);
+                intent.putExtras(bundle);
+                startActivityForResult(intent,MsgStatus.INTENT_SEND,bundle);
             }break;
             case R.id.dor_bui_layout_find_area:{
                 Intent intent = new Intent(getActivity(), FindStuActivity.class);

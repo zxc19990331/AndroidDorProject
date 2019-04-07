@@ -8,11 +8,13 @@ import com.stellaris.functions.DBHandle;
 import com.stellaris.manager.UsrManager;
 import com.stellaris.model.Posting;
 import com.stellaris.practice.LoginActivity;
+import com.stellaris.practice.PostingDetailActivity;
 import com.stellaris.practice.R;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -106,7 +108,7 @@ public class PostingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         postingViewHolder.text_content.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if(UsrManager.getIdentity().equals(DBKeys.USR_IDENT_AYI)){
+                if(UsrManager.getIdentity().equals(DBKeys.USR_IDENT_AYI)||UsrManager.getId().equals(post.getUserID())){
                     final String[] items = new String[]{"删除"};
                     new QMUIDialog.MenuDialogBuilder(context)
                             .addItems(items, new DialogInterface.OnClickListener() {
@@ -147,6 +149,16 @@ public class PostingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                             .create(mCurrentDialogStyle).show();
                 }
                 return false;
+            }
+        });
+        postingViewHolder.text_content.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("posting",post);
+                Intent intent = new Intent(context, PostingDetailActivity.class);
+                intent.putExtras(bundle);
+                context.startActivity(intent);
             }
         });
     }

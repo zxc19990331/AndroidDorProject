@@ -1,6 +1,8 @@
 package com.stellaris.model;
 
-public class Posting {
+import java.io.Serializable;
+
+public class Posting implements Serializable{
     private String id;
     private String date;
     private String userID;
