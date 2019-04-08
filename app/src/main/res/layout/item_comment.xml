@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-
+    <!--加上评论（不管能不能成功实现）-->
 
     <LinearLayout
         android:id="@+id/dor_bui_layout_eachpost"
@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginBottom="10dp"
-        android:paddingBottom="5dp"
+        android:paddingBottom="10dp"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:paddingTop="10dp"
@@ -57,6 +57,7 @@
                         android:text="@string/post_default_name"
                         android:textSize="15sp"
                         android:textStyle="bold" />
+
                     <TextView
                         android:id="@+id/item_post_tag"
                         android:layout_marginStart="8dp"
@@ -67,6 +68,7 @@
                         android:text="@string/post_tag_ayi"
                         android:visibility="invisible"
                         android:textSize="12sp" />
+
 
                 </LinearLayout>
 
@@ -95,31 +97,6 @@
             android:layout_marginLeft="53dp"
             android:lineSpacingMultiplier="1.2"
             android:text="@string/post_default_content" />
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="end"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="53dp">
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_comment" />
-
-            <TextView
-                android:id="@+id/item_post_comment_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/qmui_config_color_gray_4"
-                android:textSize="16sp"
-                android:layout_marginStart="5sp"
-                android:text="0" />
-        </LinearLayout>
-
 
     </LinearLayout>
 

@@ -15,6 +15,16 @@ public class UsrManager {
     static private String sex = "";
     static private String desc = "";
 
+    public static int getSetDest() {
+        return setDest;
+    }
+
+    public static void setSetDest(int setDest) {
+        UsrManager.setDest = setDest;
+    }
+
+    static private int setDest = 1;
+
     public static String getName() {
         return name;
     }

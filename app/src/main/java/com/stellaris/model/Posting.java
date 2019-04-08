@@ -12,6 +12,28 @@ public class Posting implements Serializable{
     private String schoolId;
     private String type;
     private String userName;
+    private String commentCount;
+    private String fromId;
+
+    public String getFromId() {
+        return fromId;
+    }
+
+    public void setFromId(String fromId) {
+        this.fromId = fromId;
+    }
+
+
+
+    public String getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(String commentCount) {
+        this.commentCount = commentCount;
+    }
+
+
 
     public String getUserName() {
         return userName;

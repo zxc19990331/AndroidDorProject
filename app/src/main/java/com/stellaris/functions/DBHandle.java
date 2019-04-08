@@ -215,7 +215,7 @@ public class DBHandle {
     }
 
     public static List<Posting> getPostingBySchoolAndBui(String schoolid,String buiid,boolean isDesc,String type){
-        String sql = "SELECT id,DATE_FORMAT(date,'%Y-%m-%d %T')date,user_id,user_name,content,comments,dor_building_id,school_id,type FROM postings WHERE school_id = '"
+        String sql = "SELECT id,DATE_FORMAT(date,'%Y-%m-%d %T')date,user_id,user_name,content,comments,dor_building_id,school_id,type,comment_count FROM postings WHERE school_id = '"
                 +schoolid+"' AND dor_building_id = '"+ buiid + "' AND type = '" + type + "'";
         sql += isDesc?" ORDER BY date DESC":" ORDER BY date ASC";
         List<Posting> posts = new ArrayList<Posting>();
@@ -238,6 +238,7 @@ public class DBHandle {
                     post.setType(res.getString(DBKeys.POST_TYPE));
                     post.setUserID(res.getString(DBKeys.POST_USR_ID));
                     post.setUserName(res.getString(DBKeys.POST_USR_NAME));
+                    post.setCommentCount(res.getString(DBKeys.POST_COM_COUNT));
                     posts.add(post);
                 }
 
@@ -261,8 +262,9 @@ public class DBHandle {
         return executeInsertSql(sql);
     }
 
-    public static List<Posting> getCommentsByPostId(String postId){
-        String sql = "SELECT id,DATE_FORMAT(date,'%Y-%m-%d %T')date,user_id,user_name,content,dor_building_id,school_id,type FROM comments WHERE from_id = '"+postId+"'";
+    public static List<Posting> getCommentsByPostId(String postId,boolean isDesc){
+        String sql = "SELECT id,DATE_FORMAT(date,'%Y-%m-%d %T')date,user_id,user_name,content,dor_building_id,school_id,type,from_id FROM comments  WHERE from_id = '"+postId+"'";
+        sql += isDesc?" ORDER BY date DESC":" ORDER BY date ASC";
         List<Posting> posts = new ArrayList<Posting>();
         Connection conn = DBUtils.getConnection();
         try {
@@ -282,6 +284,7 @@ public class DBHandle {
                     post.setType(res.getString(DBKeys.POST_TYPE));
                     post.setUserID(res.getString(DBKeys.POST_USR_ID));
                     post.setUserName(res.getString(DBKeys.POST_USR_NAME));
+                    post.setFromId(res.getString(DBKeys.POST_FROM));
                     posts.add(post);
                 }
 
@@ -302,7 +305,7 @@ public class DBHandle {
                 DBKeys.POST_ID,DBKeys.POST_DATE,DBKeys.POST_USR_ID,DBKeys.POST_CONTENT,DBKeys.POST_BUI_ID,DBKeys.POST_SCH_ID,DBKeys.POST_TYPE,DBKeys.POST_USR_NAME,DBKeys.POST_FROM,
                 post.getId(),post.getDate(),post.getUserID(),post.getContent(),post.getDorbuildingId(),post.getSchoolId(),post.getType(),post.getUserName(),toPost);
         Log.d("DBHANDLE",sql);
-        return executeInsertSql(sql);
+        return executeInsertSql(sql)&UpdateCommentCount(toPost);
     }
     public static boolean sendEvent(Event event){
         event.setId(ShortUUID.generateShortUuid());
@@ -339,6 +342,12 @@ public class DBHandle {
         Log.d("DEL",sql);
         return executeInsertSql(sql);
     }
+
+    public static boolean delComment(String commentId,String fromId){
+        String sql = String.format("DELETE FROM comments WHERE %s = '%s'",DBKeys.POST_ID,commentId);
+        return executeInsertSql(sql)&UpdateCommentCount(fromId);
+    }
+
     public static boolean UpdatePay(String dorId,double num,int type){
         String sql = String.format("UPDATE dor_room SET %s = %s + %s ,%s = NOW() WHERE %s = '%s'",type==0x0?DBKeys.ROOM_POWER:DBKeys.ROOM_WATER,type==0x0?DBKeys.ROOM_POWER:DBKeys.ROOM_WATER,String.valueOf(num),DBKeys.ROOM_LAST_REQ_DATE,DBKeys.ROOM_ID,dorId);
         Log.d("PAY",sql);
@@ -347,6 +356,11 @@ public class DBHandle {
 
     public static boolean UpdateDescr(String userId,String descr){
         String sql = String.format("UPDATE users SET %s = '%s' WHERE %s = '%s'",DBKeys.USR_DESR,descr,DBKeys.USR_ID,userId);
+        return executeInsertSql(sql);
+    }
+
+    public static boolean UpdateCommentCount(String postId){
+        String sql = "UPDATE postings AS A SET comment_count = (SELECT COUNT(*) FROM comments WHERE from_id = A.id) WHERE A.id = '"+postId+"'";
         return executeInsertSql(sql);
     }
 

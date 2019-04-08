@@ -179,11 +179,9 @@ public class HomeFragment extends Fragment {
     });
 
 
-    @OnClick({R.id.home_chalema_detail, R.id.home_title_events_more, R.id.home_title_ayisaying,R.id.dor_bui_image_add,R.id.home_layout_chalema})
+    @OnClick({R.id.home_title_events_more, R.id.home_title_ayisaying,R.id.dor_bui_image_add,R.id.home_layout_chalema})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.home_chalema_detail:
-                break;
             case R.id.home_title_events_more: {
                 Bundle bundle = new Bundle();
                 bundle.putString("type", "all");

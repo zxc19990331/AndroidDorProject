@@ -17,7 +17,8 @@ import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
-import com.stellaris.adapter.PostingAdapter;
+import com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout;
+import com.stellaris.adapter.CommentAdapter;
 import com.stellaris.constants.DBKeys;
 import com.stellaris.constants.MsgStatus;
 import com.stellaris.functions.DBHandle;
@@ -46,6 +47,10 @@ public class PostingDetailActivity extends AppCompatActivity {
     RecyclerView mRecycleView;
     @BindView(R.id.textView)
     TextView mTextView;
+    @BindView(R.id.item_post_tag)
+    TextView mTag;
+    @BindView(R.id.pull_to_refresh)
+    QMUIPullRefreshLayout mPullRefreshLayout;
 
     private String TAG = "详情";
     private Posting mPosting;
@@ -63,13 +68,43 @@ public class PostingDetailActivity extends AppCompatActivity {
         setComments();
         initView();
         initTopbar();
+        initRefresh();
+    }
+
+    private void initRefresh() {
+        //设置下拉刷新
+        mPullRefreshLayout.setOnPullListener(new QMUIPullRefreshLayout.OnPullListener() {
+            @Override
+            public void onMoveTarget(int offset) {
+
+            }
+
+            @Override
+            public void onMoveRefreshView(int offset) {
+
+            }
+
+            @Override
+            public void onRefresh() {
+                mPullRefreshLayout.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        setComments();
+                        mPullRefreshLayout.finishRefresh();
+                    }
+                }, 1000);
+            }
+        });
+
     }
 
     void initView() {
         itemPostContent.setText(mPosting.getContent());
         itemPostDate.setText(mPosting.getDate());
         itemPostName.setText(mPosting.getUserName());
-
+        if (mPosting.getType().equals(DBKeys.POST_TYPE_AYI)) {
+            mTag.setVisibility(View.VISIBLE);
+        }
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(PostingDetailActivity.this);
         linearLayoutManager.setAutoMeasureEnabled(true);
         mRecycleView.setHasFixedSize(true);
@@ -81,7 +116,7 @@ public class PostingDetailActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                mComments = DBHandle.getCommentsByPostId(mPosting.getId());
+                mComments = DBHandle.getCommentsByPostId(mPosting.getId(), false);
                 Message msg = new Message();
                 msg.what = MsgStatus.POST_GOT;
                 handler.sendMessage(msg);
@@ -97,7 +132,7 @@ public class PostingDetailActivity extends AppCompatActivity {
             }
         });
         //如果是阿姨就添加管理按钮
-        if (UsrManager.getIdentity().equals(DBKeys.USR_IDENT_AYI)||UsrManager.getId().equals(mPosting.getUserID())) {
+        if (UsrManager.getIdentity().equals(DBKeys.USR_IDENT_AYI) || UsrManager.getId().equals(mPosting.getUserID())) {
             mTopbar.addRightTextButton("管理", R.layout.button_empty).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -124,7 +159,7 @@ public class PostingDetailActivity extends AppCompatActivity {
                 }
                 break;
                 case MsgStatus.POST_GOT: {
-                    PostingAdapter adapter = new PostingAdapter(mComments, PostingDetailActivity.this);
+                    CommentAdapter adapter = new CommentAdapter(mComments, PostingDetailActivity.this);
                     mRecycleView.setAdapter(adapter);
                     if (mComments.size() == 0) {
                         mTextView.setText("暂时还没有人回复，来抢沙发吧");
@@ -195,16 +230,16 @@ public class PostingDetailActivity extends AppCompatActivity {
     @OnClick(R.id.dor_bui_image_add)
     public void onViewClicked() {
         Bundle bundle = new Bundle();
-        bundle.putString("type","comment");
-        bundle.putString("postId",mPosting.getId());
-        Intent intent = new Intent(PostingDetailActivity.this,AddPostActivity.class);
+        bundle.putString("type", "comment");
+        bundle.putString("postId", mPosting.getId());
+        Intent intent = new Intent(PostingDetailActivity.this, AddPostActivity.class);
         intent.putExtras(bundle);
-        startActivityForResult(intent,MsgStatus.INTENT_SEND,bundle);
+        startActivityForResult(intent, MsgStatus.INTENT_SEND, bundle);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode==MsgStatus.INTENT_SEND&&resultCode==MsgStatus.INTENT_NEW_CONTENT){
+        if (requestCode == MsgStatus.INTENT_SEND && resultCode == MsgStatus.INTENT_NEW_CONTENT) {
             setComments();
         }
         super.onActivityResult(requestCode, resultCode, data);

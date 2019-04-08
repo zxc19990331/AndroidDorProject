@@ -1,16 +1,5 @@
 package com.stellaris.adapter;
 
-import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
-import com.stellaris.constants.DBKeys;
-import com.stellaris.constants.MsgStatus;
-import com.stellaris.functions.DBHandle;
-import com.stellaris.manager.UsrManager;
-import com.stellaris.model.Posting;
-import com.stellaris.practice.LoginActivity;
-import com.stellaris.practice.PostingDetailActivity;
-import com.stellaris.practice.R;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,17 +15,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
+import com.stellaris.constants.DBKeys;
+import com.stellaris.constants.MsgStatus;
+import com.stellaris.functions.DBHandle;
 import com.stellaris.functions.TimeUtil;
-import com.stellaris.practice.RegisterActivity;
-
-import org.w3c.dom.Text;
+import com.stellaris.manager.UsrManager;
+import com.stellaris.model.Posting;
+import com.stellaris.practice.PostingDetailActivity;
+import com.stellaris.practice.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.TreeMap;
 
-public class PostingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     List<Posting> posts = new ArrayList<Posting>();
     Context context;
     boolean isComment = false;
@@ -47,7 +41,7 @@ public class PostingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
 
-    public PostingAdapter(List<Posting> newList,Context context){
+    public CommentAdapter(List<Posting> newList, Context context){
         this.posts = newList;
         this.context = context;
     }
@@ -56,7 +50,6 @@ public class PostingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         public TextView text_user_name;
         public TextView text_date;
         public TextView text_content;
-        public TextView text_comment_count;
         public ImageView image_avatar;
         public TextView text_tag;
         public PostingViewHolder(View itemView){
@@ -65,7 +58,6 @@ public class PostingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             text_user_name = (TextView)itemView.findViewById(R.id.item_post_name);
             text_content = (TextView)itemView.findViewById(R.id.item_post_content);
             text_date = (TextView)itemView.findViewById(R.id.item_post_date);
-            text_comment_count = (TextView)itemView.findViewById(R.id.item_post_comment_count);
             text_tag = (TextView)itemView.findViewById(R.id.item_post_tag);
         }
     }
@@ -76,7 +68,7 @@ public class PostingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     private RecyclerView.ViewHolder createPostViewHolder(ViewGroup viewGroup){
-        View view= LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_posting,viewGroup,false);
+        View view= LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_comment,viewGroup,false);
         return new PostingViewHolder(view);
     }
 
@@ -94,11 +86,10 @@ public class PostingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         postingViewHolder.text_date.setText(TimeUtil.formatDisplayTime(post.getDate(),"yyyy-MM-dd HH:mm:ss"));
         postingViewHolder.text_content.setText(post.getContent());
         postingViewHolder.text_user_name.setText(post.getUserName());
-        postingViewHolder.text_comment_count.setText(post.getCommentCount());
+        String post_id = post.getId();
         if(post.getType().equals(DBKeys.POST_TYPE_AYI)){
             postingViewHolder.text_tag.setVisibility(View.VISIBLE);
         }
-        String post_id = post.getId();
         //点击头像的事件
         postingViewHolder.image_avatar.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -145,12 +136,9 @@ public class PostingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                                                             public void run() {
                                                                 Message msg = new Message();
                                                                 boolean res;
-                                                                if(!isComment)
-                                                                    res = DBHandle.delPosting(post_id);
-                                                                else {
-                                                                    String fromId = post.getFromId();
-                                                                    res = DBHandle.delComment(post_id,fromId);
-                                                                }
+                                                                String fromId = post.getFromId();
+                                                                res = DBHandle.delComment(post_id,fromId);
+
                                                                 if(res) {
                                                                     msg.what = MsgStatus.POST_DEL_SUCCESS;
                                                                     msg.obj = position;
@@ -170,18 +158,6 @@ public class PostingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                                 .create(mCurrentDialogStyle).show();
                     }
                     return false;
-                }
-            });
-        //如果非评论回复则条转入新界面
-        if(!isComment)
-            postingViewHolder.text_content.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("posting",post);
-                    Intent intent = new Intent(context, PostingDetailActivity.class);
-                    intent.putExtras(bundle);
-                    context.startActivity(intent);
                 }
             });
     }

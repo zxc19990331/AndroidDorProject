@@ -18,6 +18,7 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -45,6 +46,8 @@ import com.baidu.mapapi.model.CoordUtil;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.model.inner.Point;
 import com.baidu.mapapi.utils.DistanceUtil;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.stellaris.manager.UsrManager;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -63,7 +66,7 @@ public class MapActivity extends BaseMapActivity implements SensorEventListener,
     /**
      * 规定到达距离范围距离
      */
-    private int DISTANCE = 200;
+    private int DISTANCE = 100;
 
     private MapView mMapView;
     private TextView mDistance_tv;
@@ -83,6 +86,9 @@ public class MapActivity extends BaseMapActivity implements SensorEventListener,
     private LatLng mCenterPos;
     private float mZoomScale = 0; //比例
     private Double lastX = 0.0;
+
+    private int setDest = 1;
+    private int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -200,6 +206,12 @@ public class MapActivity extends BaseMapActivity implements SensorEventListener,
         mHandler.post(run);//设置系统时间
 
         mDistance_tv = (TextView) findViewById(R.id.distance_tv);
+        mDistance_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDlgSetDest();
+            }
+        });
         mTime_tv = (TextView) findViewById(R.id.arriver_timetv);
         commit_bt = (RelativeLayout) findViewById(R.id.arriver_bt);
         commit_bt.setOnClickListener(this);
@@ -232,7 +244,7 @@ public class MapActivity extends BaseMapActivity implements SensorEventListener,
         mOption = new LocationClientOption();
         mOption.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
         mOption.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系，如果配合百度地图使用，建议设置为bd09ll;
-        mOption.setScanSpan(1000);//可选，默认0，即仅定位一次，设置发起连续定位请求的间隔需要大于等于1000ms才是有效的
+        mOption.setScanSpan(2000);//可选，默认0，即仅定位一次，设置发起连续定位请求的间隔需要大于等于1000ms才是有效的
         mOption.setIsNeedAddress(true);//可选，设置是否需要地址信息，默认不需要
         mOption.setIsNeedLocationDescribe(true);//可选，设置是否需要地址描述
         mOption.setNeedDeviceDirect(true);//可选，设置是否需要设备方向结果
@@ -265,6 +277,7 @@ public class MapActivity extends BaseMapActivity implements SensorEventListener,
             mBaiduMap.setMyLocationData(locData);
             mBaiduMap.setMyLocationConfiguration(new MyLocationConfiguration(
                     MyLocationConfiguration.LocationMode.NORMAL, true, null));
+            Log.d("setDest",String.valueOf(setDest));
             //更改UI
             Message message = new Message();
             message.obj = location;
@@ -283,7 +296,8 @@ public class MapActivity extends BaseMapActivity implements SensorEventListener,
             BDLocation location = (BDLocation) msg.obj;
             LatLng LocationPoint = new LatLng(location.getLatitude(), location.getLongitude());
             //打卡范围
-            mDestinationPoint = new LatLng(location.getLatitude() * 1.0001, location.getLongitude() * 1.0001);//假设公司坐标
+            mDestinationPoint = new LatLng(location.getLatitude() * (UsrManager.getSetDest()==0?1.0:1.0001), location.getLongitude() * (UsrManager.getSetDest()==0?1.0:1.0001));//假设公司坐标
+            Log.d("setDest",String.valueOf(setDest));
             setCircleOptions();
             //计算两点距离,单位：米
             mDistance = DistanceUtil.getDistance(mDestinationPoint, LocationPoint);
@@ -435,6 +449,29 @@ public class MapActivity extends BaseMapActivity implements SensorEventListener,
         }
         lastX = x;
     }
+
+    String[] mItems = {"设置当前坐标为打卡点","重置打卡点"};
+    private void showDlgSetDest(){
+        new QMUIDialog.CheckableDialogBuilder(MapActivity.this)
+                .setCheckedIndex(0)
+                .addItems(mItems, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case 0:
+                                UsrManager.setSetDest(0);
+                                break;
+                            case 1:
+                                UsrManager.setSetDest(1);
+                                break;
+                        }
+                        dialog.dismiss();
+                    }
+                })
+                .create(mCurrentDialogStyle).show();
+
+    }
+
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {

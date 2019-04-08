@@ -107,7 +107,7 @@ public class EventShowActivity extends AppCompatActivity {
                         switch (position) {
                             case 0:
                                 Intent intent = new Intent(EventShowActivity.this, AddEventActivity.class);
-                                startActivity(intent);
+                                startActivityForResult(intent,MsgStatus.INTENT_SEND);
                                 break;
                         }
                         dialog.dismiss();
@@ -153,6 +153,14 @@ public class EventShowActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(EventShowActivity.this);
         linearLayoutManager.setAutoMeasureEnabled(true);
         mRecycleView.setLayoutManager(linearLayoutManager);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==MsgStatus.INTENT_SEND&&resultCode==MsgStatus.INTENT_NEW_CONTENT){
+            setEvents();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
 }

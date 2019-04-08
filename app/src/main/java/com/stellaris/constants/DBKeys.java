@@ -28,6 +28,7 @@ public interface DBKeys {
     String POST_TYPE = "type";
     String POST_USR_NAME = "user_name";
     String POST_FROM = "from_id";
+    String POST_COM_COUNT = "comment_count";
 
     String POST_TYPE_STU = "stu";
     String POST_TYPE_AYI = "ayi";
